@@ -12,8 +12,9 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.ameur.lirejson.R;
-import com.example.ameur.lirejson.activity.MainActivity;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
+
 
 import java.util.Locale;
 

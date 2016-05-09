@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.ameur.lirejson.R;
-import com.example.ameur.lirejson.core.Quiz;
-import com.example.ameur.lirejson.fragement.ConfigFragment;
-import com.example.ameur.lirejson.fragement.LastFragment;
-import com.example.ameur.lirejson.fragement.QuestionFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.LastFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.QuestionFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        readAssetFile();
+
         facebookSDKInitialize();
+        readAssetFile();
+
 
 
         mShareFb = (Button) findViewById(R.id.shareFb);
@@ -108,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mConfig.setVisibility(View.INVISIBLE);
                 mShareFb.setVisibility(View.INVISIBLE);
                 mShareG.setVisibility(View.INVISIBLE);
-
                 toFragementQuestion();
 
                 break;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getApplicationContext().getAssets().open("quiz");
+            InputStream is = getApplicationContext().getAssets().open("quiz.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

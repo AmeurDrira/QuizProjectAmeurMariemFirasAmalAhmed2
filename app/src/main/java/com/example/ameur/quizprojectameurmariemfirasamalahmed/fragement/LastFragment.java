@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ameur.lirejson.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 
 
 public class LastFragment extends Fragment {

@@ -12,8 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.ameur.lirejson.R;
-import com.example.ameur.lirejson.core.Quiz;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
@@ -43,8 +43,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
-        //changeContextQuestion();
-
 
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
         int res = getResources().getIdentifier(mquiz.getQuestion(), "string", getContext().getPackageName());
@@ -72,10 +70,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         return view;
     }
-
-    private void changeContextQuestion() {
-    }
-
 
     @Override
     public void onClick(View v) {
