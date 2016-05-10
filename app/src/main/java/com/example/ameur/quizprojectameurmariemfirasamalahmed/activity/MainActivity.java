@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return q1;
     }
 
-    public void update(int r) {
+    public void update_QuestionFragment(int r) {
         getSupportFragmentManager().beginTransaction().replace(R.id.coordinatorLayout, QuestionFragment.newInstance(mquizs.get(r))).commit();
     }
 

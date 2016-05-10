@@ -44,31 +44,31 @@ public class ListeQuestionFragment extends DialogFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt1:
-                ql.update(1);
+                ql.update_QuestionFragment(1);
                 break;
             case R.id.bt2:
-                ql.update(2);
+                ql.update_QuestionFragment(2);
                 break;
             case R.id.bt3:
-                ql.update(3);
+                ql.update_QuestionFragment(3);
                 break;
             case R.id.bt4:
-                ql.update(4);
+                ql.update_QuestionFragment(4);
                 break;
             case R.id.bt5:
-                ql.update(5);
+                ql.update_QuestionFragment(5);
                 break;
             case R.id.bt6:
-                ql.update(6);
+                ql.update_QuestionFragment(6);
                 break;
             case R.id.bt7:
-                ql.update(7);
+                ql.update_QuestionFragment(7);
                 break;
             case R.id.bt8:
-                ql.update(8);
+                ql.update_QuestionFragment(8);
                 break;
             case R.id.bt9:
-                ql.update(9);
+                ql.update_QuestionFragment(9);
                 break;
 
         }
@@ -118,7 +118,7 @@ public class ListeQuestionFragment extends DialogFragment implements View.OnClic
 
     public interface QuestionListner
     {
-        public void update(int r);
+        public void update_QuestionFragment(int r);
 
 
     }
