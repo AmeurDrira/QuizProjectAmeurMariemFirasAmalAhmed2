@@ -248,7 +248,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String ch;
         for (Quiz q:mquizs) {
             Log.v("gettt", q.getQuestion());
-            ch=String.copyValueOf((q.getQuestion()).toCharArray(),1,2);
+         //   ch=String.copyValueOf((q.getQuestion()).toCharArray(),1,2);
+            ch=q.getQuestion();
             Log.v("iit", ch);
             if(ch.equals(x.charAt(1)))
                 q1.add(q);
