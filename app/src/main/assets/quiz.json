@@ -1,6 +1,7 @@
 {
   "questions": [
     {
+      "niveau": "1",
       "question": "q11",
       "reponseUn": "p11",
       "reponseDeux": "p21",
@@ -9,6 +10,7 @@
       "reponseCorrect": "r11"
     },
     {
+      "niveau": "1",
       "question": "q12",
       "reponseUn": "p12",
       "reponseDeux": "p22",
@@ -17,6 +19,7 @@
       "reponseCorrect": "r12"
     },
     {
+      "niveau": "1",
       "question": "q13",
       "reponseUn": "p13",
       "reponseDeux": "p23",

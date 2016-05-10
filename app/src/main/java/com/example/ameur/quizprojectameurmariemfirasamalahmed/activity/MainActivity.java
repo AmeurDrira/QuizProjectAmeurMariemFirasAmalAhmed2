@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +30,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 
@@ -95,7 +100,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         callbackManager = CallbackManager.Factory.create();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
 
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -209,34 +219,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return json;
     }
 
-    private void readAssetFile() {
+    private ArrayList<Quiz> readAssetFile() {
 
-        try {
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-            JSONArray m_jArry = obj.getJSONArray("questions");
-
-
-            for (int i = 0; i < m_jArry.length(); i++) {
-                Quiz mQuiz = new Quiz();
-                JSONObject jsonObj = m_jArry.getJSONObject(i);
-
-                mQuiz.setQuestion(jsonObj.getString("question"));
-                mQuiz.setReponseUn(jsonObj.getString("reponseUn"));
-                mQuiz.setReponseDeux(jsonObj.getString("reponseDeux"));
-                mQuiz.setReponseTrois(jsonObj.getString("reponseTrois"));
-                mQuiz.setReponseQuatre(jsonObj.getString("reponseQuatre"));
-                mQuiz.setReponseCorrect(jsonObj.getString("reponseCorrect"));
-
-                mquizs.add(mQuiz);
-
-
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        Type listType = new TypeToken<ArrayList<Quiz>>() {}.getType();
+        return  new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
 
     }
 
@@ -255,6 +241,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+
+    public ArrayList<Quiz> filtrage(String x)
+    {
+        ArrayList<Quiz>q1=new ArrayList<>();
+        String ch;
+        for (Quiz q:mquizs) {
+            Log.v("gettt", q.getQuestion());
+            ch=String.copyValueOf((q.getQuestion()).toCharArray(),1,2);
+            Log.v("iit", ch);
+            if(ch.equals(x.charAt(1)))
+                q1.add(q);
+        }
+        Collections.shuffle(q1);
+        return q1;
+    }
+
+    public void update(int r) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.coordinatorLayout, QuestionFragment.newInstance(mquizs.get(r))).commit();
+    }
 
 }
 
