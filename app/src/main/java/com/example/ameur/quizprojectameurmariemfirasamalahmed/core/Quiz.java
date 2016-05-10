@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Quiz implements Serializable {
 
-    private String niveau;
+    private int niveau;
     private String question;
     private String reponseUn;
     private String reponseDeux;
@@ -18,7 +18,7 @@ public class Quiz implements Serializable {
     public Quiz() {
     }
 
-    public Quiz(String niveau,String reponseUn, String reponseDeux, String reponseTrois, String reponseQuatre, String reponseCorrect, String question) {
+    public Quiz(int niveau,String reponseUn, String reponseDeux, String reponseTrois, String reponseQuatre, String reponseCorrect, String question) {
         this.niveau=niveau;
         this.reponseUn = reponseUn;
         this.reponseDeux = reponseDeux;
@@ -28,11 +28,11 @@ public class Quiz implements Serializable {
         this.question = question;
     }
 
-    public String getNiveau() {
+    public int getNiveau() {
         return niveau;
     }
 
-    public void setNiveau(String niveau) {
+    public void setNiveau(int niveau) {
         this.niveau = niveau;
     }
 

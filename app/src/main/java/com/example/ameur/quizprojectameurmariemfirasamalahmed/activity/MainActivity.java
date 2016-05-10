@@ -242,16 +242,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ArrayList<Quiz> filtrage(String x)
+    public ArrayList<Quiz> filtrage(int x)
     {
         ArrayList<Quiz>q1=new ArrayList<>();
-        String ch;
+        int ch;
         for (Quiz q:mquizs) {
             Log.v("gettt", q.getQuestion());
          //   ch=String.copyValueOf((q.getQuestion()).toCharArray(),1,2);
-            ch=q.getQuestion();
-            Log.v("iit", ch);
-            if(ch.equals(x.charAt(1)))
+            ch=q.getNiveau();
+            Log.v("iit", ch+"");
+            if(ch==x)
                 q1.add(q);
         }
         Collections.shuffle(q1);
