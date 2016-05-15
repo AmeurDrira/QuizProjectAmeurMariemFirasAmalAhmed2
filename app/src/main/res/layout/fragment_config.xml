@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ameur.lirejson.fragement.ConfigFragment">
+    tools:context=".fragement.ConfigFragment">
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -24,4 +24,15 @@
             android:text="New RadioButton2"
             android:textSize="25dp" />
     </RadioGroup>
+
+    <Switch
+        android:id="@+id/switchButtonSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250px"
+        android:layout_marginLeft="50px"
+        android:textSize="25dp"
+        android:layout_gravity="bottom"
+        android:text="Sound" />
+
 </FrameLayout>

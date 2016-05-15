@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
@@ -23,15 +24,19 @@ public class ConfigFragment extends DialogFragment {
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
+    private Switch mSwitchButtonSound;
 
     private int selectRadio = 0;
 
+    private static ConfigListener mConfigListener;
 
-    public static ConfigFragment newInstance() {
+    public static ConfigFragment newInstance(ConfigListener listener) {
         ConfigFragment fragment = new ConfigFragment();
-
+        mConfigListener = listener;
         return fragment;
     }
+
+
 
     public ConfigFragment() {
     }
@@ -42,7 +47,7 @@ public class ConfigFragment extends DialogFragment {
 
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = layoutInflater.inflate(R.layout.fragment_config, null);
-        final MainActivity activity = (MainActivity) getActivity();
+
 
         radioGroup = (RadioGroup) dialogView.findViewById(R.id.radioGroup);
         String languesDef = Locale.getDefault().getLanguage();
@@ -71,9 +76,9 @@ public class ConfigFragment extends DialogFragment {
                         radioGenderButton = (RadioButton) dialogView.findViewById(selectRadio);
                         reponse = radioGenderButton.getText().toString();
                         if (!reponse.isEmpty() && reponse.equals("English")) {
-                            activity.changeLanguageSettings("en");
+                            mConfigListener.changeLanguageSettings("en");
                         } else if (!reponse.isEmpty() && reponse.equals("Français")) {
-                            activity.changeLanguageSettings("fr");
+                            mConfigListener.changeLanguageSettings("fr");
                         }
 
                     }
@@ -81,6 +86,11 @@ public class ConfigFragment extends DialogFragment {
         ).setNegativeButton(android.R.string.cancel, null).setTitle(R.string.titleconfig).setView(dialogView);
 
         return builder.create();
+
+    }
+
+    public interface ConfigListener {
+        public void changeLanguageSettings(String lang);
 
     }
 
