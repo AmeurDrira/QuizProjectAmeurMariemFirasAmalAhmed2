@@ -158,13 +158,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     @Override
     public void update(int NumStage) {
 
-       // Log.v("iit", NumStage + "");
+
         mquizs = readAssetFile();
         ArrayList<Quiz> mQuizs = filtrage(NumStage);
-   /*     for (Quiz q : mQuizs) {
 
-            Log.v("iit", q.toString());
-        }*/
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
 
     }
