@@ -1,5 +1,6 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +51,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListItemWrapper liste = btmliste.get(position);
         holder.mItemTitle.setText(liste.getTitle());
-
+        if(position == position)
+            holder.itemView.setBackgroundColor(Color.GRAY);
+        else
+            holder.itemView.setBackgroundColor(Color.RED);
 
     }
 
