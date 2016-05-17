@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
+    private static ArrayList<Quiz> mquizs ;
 
 
 
@@ -42,12 +44,11 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
 
 
-    public static ListeQuestionFragment newInstance(QuestionListner qli){
+    public static ListeQuestionFragment newInstance(ArrayList<Quiz> mquizs, QuestionListner qli){
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
         question=qli;
-
-
+        mquizs=mquizs;
         return Liste;
     }
 
@@ -74,7 +75,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
             public void onClick(View view, int position) {
                 ListItemWrapper liste = btmliste.get(position);
                 Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-                question.update(liste.getId());
+                question.update(mquizs.get(liste.getId()));
             }
 
 
@@ -158,7 +159,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
     public interface QuestionListner
     {
-        public void update(int mRang);
+        public void update(Quiz mQuiz);
     }
 
 

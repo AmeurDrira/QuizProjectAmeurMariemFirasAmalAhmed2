@@ -12,6 +12,7 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListeQuestionFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.MainFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.QuestionFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
@@ -139,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     }
 
     @Override
-    public void update(int mRang) {
-     //   getSupportFragmentManager().beginTransaction().replace(R.id.content, QuestionFragment.newInstance(mquizs.get(mRang))).commit();
+    public void update(Quiz mQuiz) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
 
     }
 
