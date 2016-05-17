@@ -33,7 +33,6 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     private List<ListItemWrapper> btmliste = new ArrayList<>();
 
 
-    private static   ArrayList<Quiz> mquizs ;
 
     @Override
     public void onClick(View v) {
@@ -42,13 +41,12 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
 
 
-    public static ListeQuestionFragment newInstance(ArrayList<Quiz> mquizs,QuestionListner qli){
+    public static ListeQuestionFragment newInstance(QuestionListner qli){
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
         question=qli;
 
 
-        Log.v("iit1",mquizs.get(1).getQuestion() );
 
         return Liste;
     }
