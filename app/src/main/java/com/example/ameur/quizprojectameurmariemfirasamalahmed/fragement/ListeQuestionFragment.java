@@ -13,16 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by makni on 17/05/2016.
+ * Created by makni on 06/05/2016.
  */
 public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
     private static QuestionListner question;
@@ -31,6 +31,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
+
 
 
 
@@ -45,7 +46,6 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
         question=qli;
-
 
 
         return Liste;

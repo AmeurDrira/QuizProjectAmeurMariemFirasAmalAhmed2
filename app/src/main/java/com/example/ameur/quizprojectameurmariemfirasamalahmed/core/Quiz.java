@@ -34,6 +34,7 @@ public class Quiz implements Serializable {
     public void setNiveau(int niveau) {
         this.niveau = niveau;
     }
+
     public String getQuestion() {
         return question;
     }

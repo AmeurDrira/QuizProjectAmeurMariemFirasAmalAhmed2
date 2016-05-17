@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/liste_quest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#00FF00"
+        android:text="Liste Des Questions"
+        />
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/liste_quest"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
