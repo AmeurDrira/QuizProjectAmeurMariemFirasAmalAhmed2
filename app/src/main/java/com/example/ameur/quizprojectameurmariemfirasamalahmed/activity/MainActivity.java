@@ -5,23 +5,31 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListeQuestionFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.MainFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener,ConfigFragment.ConfigListener {
+public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener,ConfigFragment.ConfigListener ,ListeQuestionFragment.QuestionListner{
 
 
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
+
+
+
 
 
     @Override
@@ -82,6 +90,39 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+
+    // Debut  Firas
+
+
+    ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
+
+
+
+    public ArrayList<Quiz> filtrage(int mStage)
+    {
+        ArrayList<Quiz>mQuiz=new ArrayList<>();
+        int mNiv;
+        for (Quiz q:mquizs) {
+            Log.v("gettt", q.getQuestion());
+            mNiv=q.getNiveau();
+            Log.v("iit", mNiv+"");
+            if(mNiv==mStage)
+                mQuiz.add(q);
+        }
+        Collections.shuffle(mQuiz);
+        return mQuiz;
+    }
+
+
+
+    @Override
+    public void update(int mRang) {
+     //   getSupportFragmentManager().beginTransaction().replace(R.id.content, QuestionFragment.newInstance(mquizs.get(mRang))).commit();
+
+    }
+
+    // fin Firas
 
 
 }
