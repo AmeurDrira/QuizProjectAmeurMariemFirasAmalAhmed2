@@ -1,5 +1,4 @@
-{
-  "questions": [
+ [
     {
       "niveau": "1",
       "question": "q11",
@@ -19,7 +18,7 @@
       "reponseCorrect": "r12"
     },
     {
-      "niveau": "1",
+      "niveau": "2",
       "question": "q13",
       "reponseUn": "p13",
       "reponseDeux": "p23",
@@ -28,4 +27,3 @@
       "reponseCorrect": "r13"
     }
   ]
-}

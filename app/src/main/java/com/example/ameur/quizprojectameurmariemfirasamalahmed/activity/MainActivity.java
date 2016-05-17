@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListeQuestionFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.MainFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.QuestionFragment;
@@ -28,7 +29,7 @@ import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener,ConfigFragment.ConfigListener,ListeQuestionFragment.QuestionListner {
+public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
 
 
     private CallbackManager callbackManager;
@@ -80,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         configFragment.show(getSupportFragmentManager(), "");
     }
 
+
+    public void launchListeStage() {
+        //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list, ListFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(this)).commit();
+    }
+
     //cette fonction "changeLanguageSettings(String lang)" lang=en|fr pour le changement du langue du fr au en et vis vers ca :)
     public void changeLanguageSettings(String lang) {
 
@@ -100,11 +107,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
 
 
-
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getApplicationContext().getAssets().open("quiz");
+            String[] files = getApplicationContext().getAssets().list("");
+            for (String str : files) {
+                Log.v("iit", str);
+            }
+            InputStream is = getApplicationContext().getAssets().open("quiz.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -119,20 +129,20 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     private ArrayList<Quiz> readAssetFile() {
 
-        Type listType = new TypeToken<ArrayList<Quiz>>() {}.getType();
-        return  new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
+        Type listType = new TypeToken<ArrayList<Quiz>>() {
+        }.getType();
+        return new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
     }
 
 
-    public ArrayList<Quiz> filtrage(int mStage)
-    {
-        java.util.ArrayList<Quiz> mQuiz=new ArrayList<>();
+    public ArrayList<Quiz> filtrage(int mStage) {
+        java.util.ArrayList<Quiz> mQuiz = new ArrayList<>();
         int mNiv;
-        for (Quiz q:mquizs) {
-            Log.v("gettt", q.getQuestion());
-            mNiv=q.getNiveau();
-            Log.v("iit", mNiv+"");
-            if(mNiv==mStage)
+        for (Quiz q : mquizs) {
+         //   Log.v("gettt", q.getQuestion());
+            mNiv = q.getNiveau();
+         //   Log.v("iit", mNiv + "");
+            if (mNiv == mStage)
                 mQuiz.add(q);
         }
         Collections.shuffle(mQuiz);
@@ -141,10 +151,29 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     @Override
     public void update(Quiz mQuiz) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
 
     }
 
+    @Override
+    public void update(int NumStage) {
+
+       // Log.v("iit", NumStage + "");
+        mquizs = readAssetFile();
+        ArrayList<Quiz> mQuizs = filtrage(NumStage);
+   /*     for (Quiz q : mQuizs) {
+
+            Log.v("iit", q.toString());
+        }*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
+
+    }
+    @Override
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
+
+    }
 
     // Fin Firas
 

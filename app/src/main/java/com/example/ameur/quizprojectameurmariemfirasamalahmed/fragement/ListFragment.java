@@ -1,9 +1,13 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
+/**
+ * Created by makni on 17/05/2016.
+ */
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -11,62 +15,53 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by makni on 06/05/2016.
+ * Created by PROXIMEDIA-PC on 17/05/2016.
  */
-public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
-    private static QuestionListner questionListener;
+public class ListFragment extends Fragment implements View.OnClickListener {
 
-
+    private static ListedQuestionLiner questionListener;
     private RecyclerView recyclerView;
-    private CustomAdapter mAdapter;
-    private List<ListItemWrapper> btmliste = new ArrayList<>();
-    private static ArrayList<Quiz> mquizs;
+    private StageAdapter mAdapter;
+    private List<ListItemWrapper> btmlist = new ArrayList<>();
+    private TextView mtxt;
 
+
+    public static ListFragment newInstance(ListedQuestionLiner question) {
+
+        ListFragment Liste = new ListFragment();
+        questionListener = question;
+        return Liste;
+    }
 
     @Override
     public void onClick(View v) {
 
     }
 
-
-    public static ListeQuestionFragment newInstance(ArrayList<Quiz> mquiz, QuestionListner qli) {
-
-        ListeQuestionFragment Liste = new ListeQuestionFragment();
-        questionListener = qli;
-        mquizs = mquiz;
- /*       for (Quiz q : mquizs) {
-
-            Log.v("iitff", q.getQuestion());
-        }
-*/
-
-
-        return Liste;
-    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.listequestionfragmentlayout, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 
+        mtxt = (TextView) view.findViewById(R.id.txtView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        mAdapter = new CustomAdapter(btmliste);
+        mAdapter = new StageAdapter(btmlist);
 
         recyclerView.setHasFixedSize(true);
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 3);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         Log.v("eee", "" + mLayoutManager);
 
@@ -75,20 +70,25 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
+
+            @Override
             public void onClick(View view, int position) {
-                ListItemWrapper liste = btmliste.get(position);
-                Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+                ListItemWrapper liste1 = btmlist.get(position);
+                Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
+
+                // Log.v("eee",""+liste1.getId());
                 if (questionListener != null) {
-                    questionListener.update(mquizs.get(liste.getId()));
+                    questionListener.update(liste1.getId());
                 }
             }
 
+            @Override
             public void onLongClick(View view, int position) {
 
             }
         }));
 
-        addBtm();
+        addB();
 
 
         return view;
@@ -105,9 +105,9 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
-        private ListeQuestionFragment.ClickListener clickListener;
+        private ListFragment.ClickListener clickListener;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ListeQuestionFragment.ClickListener clickListener) {
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ListFragment.ClickListener clickListener) {
             this.clickListener = clickListener;
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -147,18 +147,16 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void addBtm() {
-        ListItemWrapper liste;
-        for (int i = 0; i < 9; i++) {
-            liste = new ListItemWrapper(i, "q" + (i + 1));
-            btmliste.add(liste);
+    public void addB() {
+        ListItemWrapper liste1;
+        for (int i = 1; i < 6; i++) {
+            liste1 = new ListItemWrapper(i, "Stage " + i);
+            btmlist.add(liste1);
         }
 
     }
 
-    public interface QuestionListner {
-        public void update(Quiz mQuiz);
+    public interface ListedQuestionLiner {
+        public void update(int NumStage);
     }
-
-
 }

@@ -54,7 +54,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 mMainMenuListener.launchConfig();
                 break;
             case R.id.Start:
-                //commencer le jeu :)
+                mMainMenuListener.launchListeStage();
                 break;
 
         }
@@ -63,9 +63,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     public interface MainMenuListener {
         public void sharefb();
-
-
         public void launchConfig();
+        public void launchListeStage();
 
     }
 
