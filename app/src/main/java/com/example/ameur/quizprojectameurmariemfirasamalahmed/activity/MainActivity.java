@@ -5,19 +5,31 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListeQuestionFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.MainFragment;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.QuestionFragment;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener,ConfigFragment.ConfigListener {
+public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
 
 
     private CallbackManager callbackManager;
@@ -75,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         configFragment.show(getSupportFragmentManager(), "");
     }
 
+
+    public void launchListeStage() {
+        //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list, ListFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(this)).commit();
+    }
+
     //cette fonction "changeLanguageSettings(String lang)" lang=en|fr pour le changement du langue du fr au en et vis vers ca :)
     public void changeLanguageSettings(String lang) {
 
@@ -90,5 +108,76 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     }
 
 
-}
+    // Debut Firas
 
+    ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
+
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            String[] files = getApplicationContext().getAssets().list("");
+            for (String str : files) {
+                Log.v("iit", str);
+            }
+            InputStream is = getApplicationContext().getAssets().open("quiz.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    private ArrayList<Quiz> readAssetFile() {
+
+        Type listType = new TypeToken<ArrayList<Quiz>>() {
+        }.getType();
+        return new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
+    }
+
+
+    public ArrayList<Quiz> filtrage(int mStage) {
+        java.util.ArrayList<Quiz> mQuiz = new ArrayList<>();
+        int mNiv;
+        for (Quiz q : mquizs) {
+         //   Log.v("gettt", q.getQuestion());
+            mNiv = q.getNiveau();
+         //   Log.v("iit", mNiv + "");
+            if (mNiv == mStage)
+                mQuiz.add(q);
+        }
+        Collections.shuffle(mQuiz);
+        return mQuiz;
+    }
+
+    @Override
+    public void update(Quiz mQuiz) {
+         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+
+    }
+
+    @Override
+    public void update(int NumStage) {
+
+
+        mquizs = readAssetFile();
+        ArrayList<Quiz> mQuizs = filtrage(NumStage);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
+
+    }
+    @Override
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
+
+    }
+
+    // Fin Firas
+
+}

@@ -54,7 +54,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 mMainMenuListener.launchConfig();//c'est l'appel de la methode pour changer la langue et active/desactiver Sound:)
                 break;
             case R.id.Start:
+<<<<<<< HEAD
                 mMainMenuListener.launchList();
+=======
+                mMainMenuListener.launchListeStage();
+>>>>>>> master
                 break;
 
         }
@@ -63,9 +67,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 //C'est notre listener
     public interface MainMenuListener {
         public void sharefb();
+<<<<<<< HEAD
 
     public void launchList();
+=======
+>>>>>>> master
         public void launchConfig();
+        public void launchListeStage();
 
     }
 
