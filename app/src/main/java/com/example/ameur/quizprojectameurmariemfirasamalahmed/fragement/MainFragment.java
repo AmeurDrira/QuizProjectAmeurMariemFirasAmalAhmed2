@@ -48,23 +48,23 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shareFb:
-                mMainMenuListener.sharefb();
+                mMainMenuListener.sharefb();//c'est l'appel de la methode pour partager sur fb :)
                 break;
             case R.id.Config:
-                mMainMenuListener.launchConfig();
+                mMainMenuListener.launchConfig();//c'est l'appel de la methode pour changer la langue et active/desactiver Sound:)
                 break;
             case R.id.Start:
-                //commencer le jeu :)
+                mMainMenuListener.launchList();
                 break;
 
         }
 
     }
-
+//C'est notre listener
     public interface MainMenuListener {
         public void sharefb();
 
-
+    public void launchList();
         public void launchConfig();
 
     }

@@ -61,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
             shareDialog.show(linkContent);
         }
     }
+    //cette fonction "launchList()" pour lancer fragement des stages "recyclerView" :)
+    @Override
+    public void launchList() {
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main_layout, ListFragment.newInstance()).commit();
+
+    }
 //cette fonction "launchConfig()" pour lancer le dialog fragement de changement de langue :)
 
     public void launchConfig() {
