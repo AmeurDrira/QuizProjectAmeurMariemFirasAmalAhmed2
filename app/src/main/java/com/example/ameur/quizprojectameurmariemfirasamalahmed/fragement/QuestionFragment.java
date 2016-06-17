@@ -16,24 +16,30 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
+import com.facebook.internal.CollectionMapper;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
-    private static Quiz mquiz;
+    private static Question question;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
     private RadioButton radioButton, radioButton2, radioButton3, radioButton4, radioGenderButton = null;
     private Button mButtonR;
-
+    private ArrayList<String> propositions;
 
     public QuestionFragment() {
 
     }
 
-    public static QuestionFragment newInstance(Quiz quiz) {
+    public static QuestionFragment newInstance(Question q) {
         QuestionFragment questionFragment = new QuestionFragment();
-        mquiz = quiz;
+        question = q;
         return questionFragment;
     }
 
@@ -48,21 +54,20 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
 
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
-        int res = getResources().getIdentifier(mquiz.getQuestion(), "string", getContext().getPackageName());
-        mQuestion.setText(String.valueOf(getResources().getString(res)));
+        mQuestion.setText(question.getQuestion());
 
-
+        propositions=generatePropositions(question.getProposition());
         radioButton = (RadioButton) view.findViewById(R.id.radioButton);
-        radioButton.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseUn(), "string", getContext().getPackageName()))));
+        radioButton.setText(propositions.get(0));
 
         radioButton2 = (RadioButton) view.findViewById(R.id.radioButton2);
-        radioButton2.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseDeux(), "string", getContext().getPackageName()))));
+        radioButton2.setText(propositions.get(1));
 
         radioButton3 = (RadioButton) view.findViewById(R.id.radioButton3);
-        radioButton3.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseTrois(), "string", getContext().getPackageName()))));
+        radioButton3.setText(propositions.get(2));
 
         radioButton4 = (RadioButton) view.findViewById(R.id.radioButton4);
-        radioButton4.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseQuatre(), "string", getContext().getPackageName()))));
+        radioButton4.setText(propositions.get(3));
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id
                 .coordinatorLayout);
@@ -73,7 +78,20 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         return view;
     }
-
+    public ArrayList<String> generatePropositions(ArrayList<String>propositions)
+    {
+        ArrayList<String> propos=new ArrayList<>();
+        propos.add(question.getCorrecte());
+        for (String p:propositions)
+        {
+            if ((p!=question.getCorrecte()) && (propos.size()<=4))
+            {
+                propos.add(p);
+            }
+        }
+        Collections.shuffle(propos);
+        return propos;
+    }
     @Override
     public void onClick(View v) {
         int selectRadio = 0;
@@ -92,7 +110,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                     snackbar.show();
                 } else {
                     reponse = radioGenderButton.getText().toString();
-                    reponseCorrect = String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseCorrect(), "string", getContext().getPackageName())));
+                    reponseCorrect = question.getCorrecte();
 
                     if (reponseCorrect.equals(reponse)) {
                         snackbar = Snackbar
