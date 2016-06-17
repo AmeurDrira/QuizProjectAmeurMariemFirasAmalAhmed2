@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
+public class MainActivity extends AppCompatActivity implements  MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
 
 
     private CallbackManager callbackManager;
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     @Override
     public void update(Quiz mQuiz) {
-         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+         getSupportFragmentManager().beginTransaction().add(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
 
     }
 
@@ -167,7 +167,16 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     }
     @Override
     public void onBackPressed()
-    {
+    { int count = getFragmentManager().getBackStackEntryCount();
+
+       if (count == 0) {
+         super.onBackPressed();
+            //additional code
+       } else {
+         getFragmentManager().popBackStack();
+        }
+
+
         moveTaskToBack(true);
 
     }
