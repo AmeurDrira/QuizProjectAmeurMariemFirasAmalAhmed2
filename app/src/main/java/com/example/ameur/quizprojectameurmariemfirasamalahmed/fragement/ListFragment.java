@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
 import java.util.ArrayList;
@@ -32,16 +33,20 @@ import java.util.List;
 public class ListFragment extends Fragment implements View.OnClickListener {
 
     private static ListedQuestionLiner questionListener;
+    private static Quiz score;
     private RecyclerView recyclerView;
     private StageAdapter mAdapter;
     private List<ListItemWrapper> btmlist = new ArrayList<>();
     private TextView mtxt;
 
 
+
+
     public static ListFragment newInstance(ListedQuestionLiner question) {
 
         ListFragment Liste = new ListFragment();
         questionListener = question;
+        score=new Quiz();
         return Liste;
     }
 
@@ -150,8 +155,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     public void addB() {
         ListItemWrapper liste1;
         for (int i = 1; i < 6; i++) {
-            liste1 = new ListItemWrapper(i, "Stage " + i);
+            Log.v("m",score.getScore()+"");
+            liste1 = new ListItemWrapper(i, "Stage"+i+" score"+score.getScore());
             btmlist.add(liste1);
+
         }
 
     }

@@ -10,6 +10,7 @@ public class ListItemWrapper implements Serializable {
 
     private int mId;
     private String mTitle;
+    private int score;
 
 
     public ListItemWrapper() {
@@ -17,10 +18,20 @@ public class ListItemWrapper implements Serializable {
     }
 
 
+    public ListItemWrapper(int id, String title,int score) {
+
+        mId=id;
+        mTitle = title;
+        this.score=score;
+
+
+
+    }
     public ListItemWrapper(int id, String title) {
 
         mId=id;
         mTitle = title;
+
 
 
 
@@ -42,7 +53,12 @@ public class ListItemWrapper implements Serializable {
         this.mTitle = mTitle;
     }
 
+    public int getScore() {
+        return score;
+    }
 
-
+    public void setScore(int score) {
+        this.score = score;
+    }
 }
 

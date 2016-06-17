@@ -13,8 +13,10 @@ public class Quiz implements Serializable {
     private String reponseTrois;
     private String reponseQuatre;
     private String reponseCorrect;
+    private int score=0;
 
     public Quiz() {
+        this.score=0;
     }
 
     public Quiz(int niveau,String reponseUn, String reponseDeux, String reponseTrois, String reponseQuatre, String reponseCorrect, String question) {
@@ -25,6 +27,7 @@ public class Quiz implements Serializable {
         this.reponseQuatre = reponseQuatre;
         this.reponseCorrect = reponseCorrect;
         this.question = question;
+
     }
 
     public int getNiveau() {
@@ -81,6 +84,14 @@ public class Quiz implements Serializable {
 
     public void setReponseQuatre(String reponseQuatre) {
         this.reponseQuatre = reponseQuatre;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
 

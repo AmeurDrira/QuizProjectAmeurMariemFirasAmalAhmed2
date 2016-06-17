@@ -97,7 +97,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                     if (reponseCorrect.equals(reponse)) {
                         snackbar = Snackbar
                                 .make(coordinatorLayout, "Bravo", Snackbar.LENGTH_LONG);
-
+                        mquiz.setScore(mquiz.getScore()+1);
                         snackbar.show();
                         radioGroup.clearCheck();
 
