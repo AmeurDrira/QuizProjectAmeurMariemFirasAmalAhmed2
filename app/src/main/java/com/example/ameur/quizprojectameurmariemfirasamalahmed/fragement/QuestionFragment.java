@@ -16,11 +16,8 @@ import android.widget.TextView;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
-import com.facebook.internal.CollectionMapper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 
