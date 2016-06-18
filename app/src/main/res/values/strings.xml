@@ -1,7 +1,13 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">QuizProjectAmeurMariemFirasAmalAhmed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
  </resources>
 
+=======
+    <string name="app_name">Quiz</string>
+    <string name="facebook_app_id" translatable="false">1731309327134941</string>
+</resources>
+>>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c

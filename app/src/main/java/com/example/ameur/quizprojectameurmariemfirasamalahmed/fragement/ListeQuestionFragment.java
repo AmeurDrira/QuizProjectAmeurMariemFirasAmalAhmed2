@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,34 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by makni on 06/05/2016.
- */
 public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
     private static QuestionListner questionListener;
-
-
+    private static ArrayList<Question> questions;
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
-    private static ArrayList<Question> questions;
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 
     public static ListeQuestionFragment newInstance(ArrayList<Question> q, QuestionListner qli) {
 
@@ -48,6 +33,11 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         questionListener = qli;
         questions = q;
         return Liste;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +75,15 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
+    public void addBtm() {
+        ListItemWrapper liste;
+        for (int i = 0; i < 9; i++) {
+            liste = new ListItemWrapper(i, "q" + (i + 1));
+            btmliste.add(liste);
+        }
+
+    }
+
 
     public interface ClickListener {
         void onClick(View view, int position);
@@ -92,6 +91,10 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         void onLongClick(View view, int position);
     }
 
+
+    public interface QuestionListner {
+        void update(Question question);
+    }
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
@@ -135,20 +138,6 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-
-    public void addBtm() {
-        ListItemWrapper liste;
-        for (int i = 0; i < 9; i++) {
-            liste = new ListItemWrapper(i, "q" + (i + 1));
-            btmliste.add(liste);
-        }
-
-    }
-
-    public interface QuestionListner {
-        void update(Question question);
     }
 
 

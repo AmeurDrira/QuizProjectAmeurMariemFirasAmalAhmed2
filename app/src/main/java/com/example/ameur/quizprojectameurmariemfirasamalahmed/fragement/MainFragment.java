@@ -12,13 +12,12 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
+    private static MainMenuListener mMainMenuListener;
     private Button mResume;
     private Button mStart;
     private Button mConfig;
     private Button mShareFb;
     private Button mShareG;
-
-    private static MainMenuListener mMainMenuListener;
 
     public static MainFragment newInstance(MainMenuListener listener) {
         MainFragment fragment = new MainFragment();
@@ -48,22 +47,32 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shareFb:
-                mMainMenuListener.sharefb();
+                mMainMenuListener.sharefb();//c'est l'appel de la methode pour partager sur fb :)
                 break;
             case R.id.Config:
-                mMainMenuListener.launchConfig();
+                mMainMenuListener.launchConfig();//c'est l'appel de la methode pour changer la langue et active/desactiver Sound:)
                 break;
             case R.id.Start:
                 mMainMenuListener.launchListeStage();
+
+                break;
+            case R.id.shareG:
+                mMainMenuListener.shareG();
+
                 break;
 
         }
 
     }
 
+    //C'est notre listener
     public interface MainMenuListener {
         public void sharefb();
+
         public void launchConfig();
+
+        public void shareG();
+
         public void launchListeStage();
 
     }
