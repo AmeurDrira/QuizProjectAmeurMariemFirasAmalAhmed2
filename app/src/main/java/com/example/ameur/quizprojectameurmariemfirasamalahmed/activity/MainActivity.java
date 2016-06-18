@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
-        createDB();
+        //createDB();
     }
 
     //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                     .build();
             shareDialog.show(linkContent);
         }
+    }
+
+    @Override
+    public void launchList() {
+
     }
 
     //cette fonction "launchConfig()" pour lancer le dialog fragement de changement de langue :)
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         }
         moveTaskToBack(true);
     }
-
+/*
     public void createDB() {
         MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
         try {
@@ -183,6 +188,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     // Fin Firas
 }

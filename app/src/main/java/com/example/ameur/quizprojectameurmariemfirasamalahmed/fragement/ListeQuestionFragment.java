@@ -30,10 +30,6 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
     private static ArrayList<Question> questions;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 
     @Override
     public void onClick(View v) {
