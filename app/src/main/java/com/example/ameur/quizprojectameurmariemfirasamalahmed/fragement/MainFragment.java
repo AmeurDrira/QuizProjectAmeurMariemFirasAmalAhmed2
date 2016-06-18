@@ -12,13 +12,12 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
+    private static MainMenuListener mMainMenuListener;
     private Button mResume;
     private Button mStart;
     private Button mConfig;
     private Button mShareFb;
     private Button mShareG;
-
-    private static MainMenuListener mMainMenuListener;
 
     public static MainFragment newInstance(MainMenuListener listener) {
         MainFragment fragment = new MainFragment();
@@ -65,8 +64,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     //C'est notre listener
     public interface MainMenuListener {
         public void sharefb();
-
-        public void launchList();
 
         public void launchConfig();
 

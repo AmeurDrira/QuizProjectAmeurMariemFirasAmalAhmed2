@@ -14,33 +14,26 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
-
 
 import java.util.Locale;
 
 
 public class ConfigFragment extends DialogFragment {
+    private static ConfigListener mConfigListener;
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
     private Switch mSwitchButtonSound;
-
     private int selectRadio = 0;
 
-    private static ConfigListener mConfigListener;
+    public ConfigFragment() {
+    }
 
     public static ConfigFragment newInstance(ConfigListener listener) {
         ConfigFragment fragment = new ConfigFragment();
         mConfigListener = listener;
         return fragment;
     }
-
-
-
-    public ConfigFragment() {
-    }
-
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

@@ -85,6 +85,15 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public void addB() {
+        ListItemWrapper liste1;
+        for (int i = 1; i < 6; i++) {
+            liste1 = new ListItemWrapper(i, "Stage " + i);
+            btmlist.add(liste1);
+        }
+
+    }
+
 
     public interface ClickListener {
         void onClick(View view, int position);
@@ -92,6 +101,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         void onLongClick(View view, int position);
     }
 
+
+    public interface ListedQuestionLiner {
+        public void update(int NumStage);
+    }
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
@@ -135,19 +148,5 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-
-    public void addB() {
-        ListItemWrapper liste1;
-        for (int i = 1; i < 6; i++) {
-            liste1 = new ListItemWrapper(i, "Stage " + i);
-            btmlist.add(liste1);
-        }
-
-    }
-
-    public interface ListedQuestionLiner {
-        public void update(int NumStage);
     }
 }

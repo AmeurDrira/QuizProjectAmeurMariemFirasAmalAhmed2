@@ -3,12 +3,10 @@ package com.example.ameur.quizprojectameurmariemfirasamalahmed.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.MySQLiteHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.PropositionsHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.QuestionsHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.PropositionsContentProvider;
@@ -25,14 +23,13 @@ import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
+    private static String Correcte = "";
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
-    private static String Correcte = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +63,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
                     .build();
             shareDialog.show(linkContent);
         }
-    }
-
-    @Override
-    public void launchList() {
-
     }
 
     //cette fonction "launchConfig()" pour lancer le dialog fragement de changement de langue :)
