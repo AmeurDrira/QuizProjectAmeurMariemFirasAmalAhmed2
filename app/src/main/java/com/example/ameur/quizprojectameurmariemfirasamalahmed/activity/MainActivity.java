@@ -2,12 +2,18 @@ package com.example.ameur.quizprojectameurmariemfirasamalahmed.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.PropositionsHelper;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.QuestionsHelper;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.PropositionsContentProvider;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.QuestionsContentProvider;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ConfigFragment;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement.ListFragment;
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements  MainFragment.Mai
 
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
-
+    private static String Correcte="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,67 +108,86 @@ public class MainActivity extends AppCompatActivity implements  MainFragment.Mai
     }
 
 
-    // Debut Firas
+    // populate Propositions Array from database depends of question id
+    private ArrayList<String > generatePropositions(int idQuestion,int correctOne,String langue)
+    {
+        int idLangue;
+        ArrayList<String> propositions=new ArrayList<>();
+        String[] projection = {PropositionsHelper.COLUMN_ID,PropositionsHelper.COLUMN_QUESTION,PropositionsHelper.COLUMN_FRANCAIS,PropositionsHelper.COLUMN_ANGLAIS};
+        Uri uri= PropositionsContentProvider.CONTENT_URI;
+        Cursor cursor=getContentResolver().query(uri, projection, PropositionsHelper.COLUMN_QUESTION + "=" + idQuestion, null,null);
+        if (langue.equals("fr"))
+        {
+            idLangue=2;
+        }
+        else
+        {
+            idLangue=3;
+        }
+        while (cursor.moveToNext())
+        {
 
-    ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
-
-
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            String[] files = getApplicationContext().getAssets().list("");
-            for (String str : files) {
-                Log.v("iit", str);
+            propositions.add(cursor.getString(idLangue));
+            if (cursor.getInt(0)==correctOne)
+            {
+                Correcte=cursor.getString(idLangue);
             }
-            InputStream is = getApplicationContext().getAssets().open("quiz.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
         }
-        return json;
+        return propositions;
     }
-
-    private ArrayList<Quiz> readAssetFile() {
-
-        Type listType = new TypeToken<ArrayList<Quiz>>() {
-        }.getType();
-        return new GsonBuilder().create().fromJson(loadJSONFromAsset(), listType);
-    }
-
-
-    public ArrayList<Quiz> filtrage(int mStage) {
-        java.util.ArrayList<Quiz> mQuiz = new ArrayList<>();
-        int mNiv;
-        for (Quiz q : mquizs) {
-         //   Log.v("gettt", q.getQuestion());
-            mNiv = q.getNiveau();
-         //   Log.v("iit", mNiv + "");
-            if (mNiv == mStage)
-                mQuiz.add(q);
+    // populate Question Array from database depends on level
+    private ArrayList<Question> QuestionsLoader(int stage, String langue)
+    {
+        int idLangue;
+        Question question;
+        ArrayList<Question> qestions=new ArrayList<Question>();
+        ArrayList<String > propositions;
+        String[] projection = {QuestionsHelper.COLUMN_ID,QuestionsHelper.COLUMN_FRANCAIS,QuestionsHelper.COLUMN_ANGLAIS,QuestionsHelper.COLUMN_CORRECTE,QuestionsHelper.COLUMN_STAGE};
+        Uri uri= QuestionsContentProvider.CONTENT_URI;
+        Cursor cursor=getContentResolver().query(uri, projection, QuestionsHelper.COLUMN_STAGE + "=" + stage, null,null);
+        try
+        {
+            if (langue.equals("fr"))
+            {
+                idLangue=1;
+            }
+            else
+            {
+                idLangue=2;
+            }
+            while (cursor.moveToNext())
+            {
+                question=new Question();
+                question.setQuestion(cursor.getString(idLangue));
+                question.setProposition(generatePropositions(cursor.getInt(0),cursor.getInt(3),langue));
+                question.setCorrecte(Correcte);
+                qestions.add(question);
+            }
         }
-        Collections.shuffle(mQuiz);
-        return mQuiz;
+        finally
+        {
+            cursor.close();
+        }
+        return qestions;
+
     }
 
     @Override
+<<<<<<< HEAD
     public void update(Quiz mQuiz) {
          getSupportFragmentManager().beginTransaction().add(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+=======
+    public void update(Question question) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(question)).commit();
+>>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
 
     }
 
     @Override
     public void update(int NumStage) {
-
-
-        mquizs = readAssetFile();
-        ArrayList<Quiz> mQuizs = filtrage(NumStage);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
+        String langue = Locale.getDefault().getLanguage();
+        ArrayList<Question> questions =QuestionsLoader(NumStage,langue);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, this)).commit();
 
     }
     @Override
