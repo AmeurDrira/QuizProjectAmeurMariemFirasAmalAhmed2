@@ -3,11 +3,13 @@ package com.example.ameur.quizprojectameurmariemfirasamalahmed.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.MySQLiteHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.PropositionsHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.QuestionsHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.PropositionsContentProvider;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements  MainFragment.Mai
         shareDialog = new ShareDialog(this);
 
         launchMenu();
+        createDB();
     }
     //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
 
@@ -173,13 +176,10 @@ public class MainActivity extends AppCompatActivity implements  MainFragment.Mai
     }
 
     @Override
-<<<<<<< HEAD
-    public void update(Quiz mQuiz) {
-         getSupportFragmentManager().beginTransaction().add(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
-=======
+
     public void update(Question question) {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(question)).commit();
->>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
+
 
     }
 
@@ -206,6 +206,38 @@ public class MainActivity extends AppCompatActivity implements  MainFragment.Mai
 
     }
 
+
+
+    public void createDB()
+    {
+        MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
+
+        try {
+
+            myDbHelper.createDataBase();
+
+        } catch (IOException ioe) {
+
+            throw new Error("Unable to create database");
+
+        }
+
+        try {
+
+            myDbHelper.openDataBase();
+
+        }catch(SQLException sqle){
+
+            try {
+                throw sqle;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+    }
     // Fin Firas
 
 }

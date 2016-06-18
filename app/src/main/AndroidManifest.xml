@@ -13,11 +13,7 @@
         android:label="BRAIN"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity
-            android:name=".activity.MainActivity"
-            android:configChanges="keyboardHidden|orientation">
-=======
+
         <provider
             android:name=".Provider.QuestionsContentProvider"
             android:authorities="quiz.projet.ahmedameuramalfirasmariem.questionsprovider"></provider>
@@ -25,7 +21,7 @@
             android:name=".Provider.PropositionsContentProvider"
             android:authorities="quiz.projet.ahmedameuramalfirasmariem.propositionsprovider"></provider>
         <activity android:name=".activity.MainActivity">
->>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

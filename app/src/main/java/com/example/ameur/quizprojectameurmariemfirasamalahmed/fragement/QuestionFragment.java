@@ -29,15 +29,11 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     private static Question question;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
-<<<<<<< HEAD
+
 
     private Button mButtonN,mButtonq1,mButtonq2,mButtonq3,mButtonq4;
-
-=======
-    private RadioButton radioButton, radioButton2, radioButton3, radioButton4, radioGenderButton = null;
-    private Button mButtonR;
     private ArrayList<String> propositions;
->>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
+
 
     public QuestionFragment() {
 
@@ -62,36 +58,23 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
         mQuestion.setText(question.getQuestion());
 
-<<<<<<< HEAD
+
         mButtonq1 = (Button) view.findViewById(R.id.button1);
-        mButtonq1.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseUn(), "string", getContext().getPackageName()))));
+        mButtonq1.setText(propositions.get(0));
         mButtonq1.setOnClickListener(this);
 
         mButtonq2 = (Button) view.findViewById(R.id.button2);
-        mButtonq2.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseDeux(), "string", getContext().getPackageName()))));
+        mButtonq2.setText(propositions.get(1));
         mButtonq2.setOnClickListener(this);
 
         mButtonq3 = (Button) view.findViewById(R.id.button3);
-        mButtonq3.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseTrois(), "string", getContext().getPackageName()))));
+        mButtonq3.setText(propositions.get(2));
         mButtonq3.setOnClickListener(this);
 
         mButtonq4 = (Button) view.findViewById(R.id.button4);
-        mButtonq4.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseQuatre(), "string", getContext().getPackageName()))));
+        mButtonq4.setText(propositions.get(3));
         mButtonq4.setOnClickListener(this);
-=======
-        propositions=generatePropositions(question.getProposition());
-        radioButton = (RadioButton) view.findViewById(R.id.radioButton);
-        radioButton.setText(propositions.get(0));
 
-        radioButton2 = (RadioButton) view.findViewById(R.id.radioButton2);
-        radioButton2.setText(propositions.get(1));
-
-        radioButton3 = (RadioButton) view.findViewById(R.id.radioButton3);
-        radioButton3.setText(propositions.get(2));
-
-        radioButton4 = (RadioButton) view.findViewById(R.id.radioButton4);
-        radioButton4.setText(propositions.get(3));
->>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id
                 .coordinatorLayout);
@@ -120,19 +103,14 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         int selectRadio = 0;
         String reponse = "";
-        reponseCorrect = String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseCorrect(), "string", getContext().getPackageName())));
+        reponseCorrect = question.getCorrecte();
 
         switch (v.getId()) {
             case R.id.button1:
 
-<<<<<<< HEAD
+
                     reponse = mButtonq1.getText().toString();
-=======
-                    snackbar.show();
-                } else {
-                    reponse = radioGenderButton.getText().toString();
-                    reponseCorrect = question.getCorrecte();
->>>>>>> 2e3797060e33b2875d4b106d57faf42947957ccd
+
 
                     if (reponseCorrect.equals(reponse)) {
                         snackbar = Snackbar
