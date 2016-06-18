@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -23,8 +24,9 @@ public class ConfigFragment extends DialogFragment {
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
-    private Switch mSwitchButtonSound;
+
     private int selectRadio = 0;
+    private Switch switchSound;
 
     public ConfigFragment() {
     }
@@ -56,6 +58,23 @@ public class ConfigFragment extends DialogFragment {
         radiolangugeEN = (RadioButton) dialogView.findViewById(R.id.radiolangugeEN);
         radiolangugeEN.setText("English");
 
+
+        switchSound = (Switch) dialogView.findViewById(R.id.switchButtonSound);
+        if (getActivity().getSharedPreferences("quiz", 0).getBoolean("status", false) == true) {
+            switchSound.setChecked(true);
+
+        } else {
+            switchSound.setChecked(false);
+
+        }
+
+
+        switchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getActivity().getSharedPreferences("quiz", 0).edit().putBoolean("status", isChecked).commit();
+            }
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 

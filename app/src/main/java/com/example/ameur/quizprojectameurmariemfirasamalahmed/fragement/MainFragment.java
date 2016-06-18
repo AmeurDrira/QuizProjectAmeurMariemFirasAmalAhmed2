@@ -56,6 +56,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 mMainMenuListener.launchListeStage();
 
                 break;
+            case R.id.shareG:
+                mMainMenuListener.shareG();
+
+                break;
 
         }
 
@@ -66,6 +70,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         public void sharefb();
 
         public void launchConfig();
+
+        public void shareG();
 
         public void launchListeStage();
 
