@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 
@@ -28,7 +29,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
-    private static ArrayList<Quiz> mquizs;
+    private static ArrayList<Question> questions;
 
     @Override
     public void onClick(View v) {
@@ -36,18 +37,11 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public static ListeQuestionFragment newInstance(ArrayList<Quiz> mquiz, QuestionListner qli) {
+    public static ListeQuestionFragment newInstance(ArrayList<Question> q, QuestionListner qli) {
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
         questionListener = qli;
-        mquizs = mquiz;
- /*       for (Quiz q : mquizs) {
-
-            Log.v("iitff", q.getQuestion());
-        }
-*/
-
-
+        questions = q;
         return Liste;
     }
 
@@ -63,18 +57,15 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         recyclerView.setHasFixedSize(true);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 3);
         recyclerView.setLayoutManager(mLayoutManager);
-        Log.v("eee", "" + mLayoutManager);
-
 
         recyclerView.setAdapter(mAdapter);
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
             public void onClick(View view, int position) {
                 ListItemWrapper liste = btmliste.get(position);
                 Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
                 if (questionListener != null) {
-                    questionListener.update(mquizs.get(liste.getId()));
+                    questionListener.update(questions.get(liste.getId()));
                 }
             }
 
@@ -152,7 +143,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     }
 
     public interface QuestionListner {
-        public void update(Quiz mQuiz);
+        void update(Question question);
     }
 
 
