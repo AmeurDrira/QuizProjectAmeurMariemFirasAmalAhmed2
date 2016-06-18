@@ -1,8 +1,7 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
+
+
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;

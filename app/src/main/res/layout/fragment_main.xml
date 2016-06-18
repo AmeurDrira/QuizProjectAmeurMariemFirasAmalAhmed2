@@ -55,17 +55,21 @@
 
     <Button
         android:id="@+id/shareFb"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="1dp"
         android:layout_below="@+id/Config"
         android:layout_marginTop="50dp"
+        android:layout_marginLeft="100dp"
         android:background="@drawable/fb" />
 
     <Button
         android:id="@+id/shareG"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:padding="1dp"
         android:layout_below="@+id/Config"
         android:layout_marginTop="50dp"
         android:background="@drawable/google" />

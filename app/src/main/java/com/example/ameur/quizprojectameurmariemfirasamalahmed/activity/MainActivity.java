@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
             shareDialog.show(linkContent);
         }
     }
+
     //cette fonction "launchList()" pour lancer fragement des stages "recyclerView" :)
     @Override
     public void launchList() {
@@ -145,9 +146,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         java.util.ArrayList<Quiz> mQuiz = new ArrayList<>();
         int mNiv;
         for (Quiz q : mquizs) {
-         //   Log.v("gettt", q.getQuestion());
+            //   Log.v("gettt", q.getQuestion());
             mNiv = q.getNiveau();
-         //   Log.v("iit", mNiv + "");
+            //   Log.v("iit", mNiv + "");
             if (mNiv == mStage)
                 mQuiz.add(q);
         }
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     @Override
     public void update(Quiz mQuiz) {
-         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
 
     }
 
@@ -171,9 +172,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
 
     }
+
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         moveTaskToBack(true);
 
     }

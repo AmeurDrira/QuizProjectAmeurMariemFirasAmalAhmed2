@@ -17,8 +17,8 @@ public class Quiz implements Serializable {
     public Quiz() {
     }
 
-    public Quiz(int niveau,String reponseUn, String reponseDeux, String reponseTrois, String reponseQuatre, String reponseCorrect, String question) {
-        this.niveau=niveau;
+    public Quiz(int niveau, String reponseUn, String reponseDeux, String reponseTrois, String reponseQuatre, String reponseCorrect, String question) {
+        this.niveau = niveau;
         this.reponseUn = reponseUn;
         this.reponseDeux = reponseDeux;
         this.reponseTrois = reponseTrois;

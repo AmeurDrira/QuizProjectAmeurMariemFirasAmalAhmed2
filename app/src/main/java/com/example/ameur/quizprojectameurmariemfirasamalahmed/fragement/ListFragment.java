@@ -1,9 +1,5 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
@@ -26,9 +21,6 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWr
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by PROXIMEDIA-PC on 17/05/2016.
- */
 public class ListFragment extends Fragment implements View.OnClickListener {
 
     private static ListedQuestionLiner questionListener;
@@ -47,7 +39,6 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
