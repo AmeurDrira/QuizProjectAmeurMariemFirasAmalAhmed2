@@ -1,9 +1,5 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
@@ -26,9 +21,6 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWr
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by PROXIMEDIA-PC on 17/05/2016.
- */
 public class ListFragment extends Fragment implements View.OnClickListener {
 
     private static ListedQuestionLiner questionListener;
@@ -47,7 +39,6 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +85,15 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public void addB() {
+        ListItemWrapper liste1;
+        for (int i = 1; i < 6; i++) {
+            liste1 = new ListItemWrapper(i, "Stage " + i);
+            btmlist.add(liste1);
+        }
+
+    }
+
 
     public interface ClickListener {
         void onClick(View view, int position);
@@ -101,6 +101,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         void onLongClick(View view, int position);
     }
 
+
+    public interface ListedQuestionLiner {
+        public void update(int NumStage);
+    }
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
@@ -144,19 +148,5 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-
-    public void addB() {
-        ListItemWrapper liste1;
-        for (int i = 1; i < 6; i++) {
-            liste1 = new ListItemWrapper(i, "Stage " + i);
-            btmlist.add(liste1);
-        }
-
-    }
-
-    public interface ListedQuestionLiner {
-        public void update(int NumStage);
     }
 }

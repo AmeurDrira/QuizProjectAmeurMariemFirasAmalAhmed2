@@ -9,38 +9,33 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
-
 
 import java.util.Locale;
 
 
 public class ConfigFragment extends DialogFragment {
+    private static ConfigListener mConfigListener;
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
-    private Switch mSwitchButtonSound;
 
     private int selectRadio = 0;
+    private Switch switchSound;
 
-    private static ConfigListener mConfigListener;
+    public ConfigFragment() {
+    }
 
     public static ConfigFragment newInstance(ConfigListener listener) {
         ConfigFragment fragment = new ConfigFragment();
         mConfigListener = listener;
         return fragment;
     }
-
-
-
-    public ConfigFragment() {
-    }
-
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -63,6 +58,23 @@ public class ConfigFragment extends DialogFragment {
         radiolangugeEN = (RadioButton) dialogView.findViewById(R.id.radiolangugeEN);
         radiolangugeEN.setText("English");
 
+
+        switchSound = (Switch) dialogView.findViewById(R.id.switchButtonSound);
+        if (getActivity().getSharedPreferences("quiz", 0).getBoolean("status", false) == true) {
+            switchSound.setChecked(true);
+
+        } else {
+            switchSound.setChecked(false);
+
+        }
+
+
+        switchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getActivity().getSharedPreferences("quiz", 0).edit().putBoolean("status", isChecked).commit();
+            }
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 

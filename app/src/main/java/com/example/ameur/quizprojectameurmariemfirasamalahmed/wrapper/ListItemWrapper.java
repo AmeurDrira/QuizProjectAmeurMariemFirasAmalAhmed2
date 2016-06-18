@@ -7,23 +7,17 @@ import java.io.Serializable;
  */
 public class ListItemWrapper implements Serializable {
 
-
     private int mId;
     private String mTitle;
-
 
     public ListItemWrapper() {
 
     }
 
-
     public ListItemWrapper(int id, String title) {
 
-        mId=id;
+        mId = id;
         mTitle = title;
-
-
-
     }
 
     public int getId() {
@@ -41,8 +35,5 @@ public class ListItemWrapper implements Serializable {
     public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
-
-
-
 }
 

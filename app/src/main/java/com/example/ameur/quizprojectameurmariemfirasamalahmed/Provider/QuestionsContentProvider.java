@@ -21,28 +21,26 @@ import java.util.HashSet;
  * Created by !l-PazZ0 on 07/05/2016.
  */
 public class QuestionsContentProvider extends ContentProvider {
-    private MySQLiteHelper database;
-
-    // used for the UriMacher
-    private static final int TOUS = 10;
-    private static final int UNIQUE = 20;
-
-    private static final String AUTHORITY = "quiz.projet.ahmedameuramalfirasmariem.questionsprovider";
-
-    private static final String BASE_PATH = "quiz";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-            + "/" + BASE_PATH);
-
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/questions";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/question";
-
+    // used for the UriMacher
+    private static final int TOUS = 10;
+    private static final int UNIQUE = 20;
+    private static final String AUTHORITY = "quiz.projet.ahmedameuramalfirasmariem.questionsprovider";
+    private static final String BASE_PATH = "quiz";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+            + "/" + BASE_PATH);
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, TOUS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", UNIQUE);
     }
+
+    private MySQLiteHelper database;
+
     @Override
     public boolean onCreate() {
         database = new MySQLiteHelper(getContext());
@@ -75,7 +73,7 @@ public class QuestionsContentProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = database.getWritableDatabase();
-        Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         // make sure that potential listeners are getting notified
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -169,8 +167,9 @@ public class QuestionsContentProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
     }
+
     private void checkColumns(String[] projection) {
-        String[] available = { QuestionsHelper.COLUMN_FRANCAIS,QuestionsHelper.COLUMN_ANGLAIS, QuestionsHelper.COLUMN_CORRECTE,QuestionsHelper.COLUMN_STAGE,QuestionsHelper.COLUMN_ID };
+        String[] available = {QuestionsHelper.COLUMN_FRANCAIS, QuestionsHelper.COLUMN_ANGLAIS, QuestionsHelper.COLUMN_CORRECTE, QuestionsHelper.COLUMN_STAGE, QuestionsHelper.COLUMN_ID};
         if (projection != null) {
             HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));
             HashSet<String> availableColumns = new HashSet<String>(Arrays.asList(available));

@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 public class PropositionsHelper {
     public static final String TABLE_NAME = "Proposition";
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_QUESTION="id_question";
+    public static final String COLUMN_QUESTION = "id_question";
     public static final String COLUMN_FRANCAIS = "Francais";
-    public static final String COLUMN_ANGLAIS="Anglais";
+    public static final String COLUMN_ANGLAIS = "Anglais";
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_NAME + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_QUESTION +" integer not null, " + COLUMN_FRANCAIS + " text not null, " + COLUMN_ANGLAIS + " text not null);";
+            + " integer primary key autoincrement, " + COLUMN_QUESTION + " integer not null, " + COLUMN_FRANCAIS + " text not null, " + COLUMN_ANGLAIS + " text not null);";
 
     public static void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);

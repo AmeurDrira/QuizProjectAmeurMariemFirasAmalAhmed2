@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">QuizProjectAmeurMariemFirasAmalAhmed</string>
+    <string name="app_name">Quiz</string>
+    <string name="facebook_app_id" translatable="false">1731309327134941</string>
 </resources>
