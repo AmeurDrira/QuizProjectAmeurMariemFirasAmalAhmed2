@@ -31,12 +31,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     private Button mButtonN,mButtonq1,mButtonq2,mButtonq3,mButtonq4;
     private ArrayList<String> propositions;
-<<<<<<< HEAD
-
-
-=======
     private TextView mQuestion;
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
     public QuestionFragment() {
 
     }
@@ -54,12 +49,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
         mQuestion.setText(question.getQuestion());
 
-<<<<<<< HEAD
-=======
         propositions = generatePropositions(question.getProposition());
-        radioButton = (RadioButton) view.findViewById(R.id.radioButton);
-        radioButton.setText(propositions.get(0));
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
 
         mButtonq1 = (Button) view.findViewById(R.id.button1);
         mButtonq1.setText(propositions.get(0));

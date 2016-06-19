@@ -7,11 +7,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
-<<<<<<< HEAD
 import android.database.SQLException;
-=======
 import android.media.MediaPlayer;
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -34,19 +31,14 @@ import com.facebook.FacebookSdk;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.plus.PlusShare;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-<<<<<<< HEAD
-
-public class MainActivity extends AppCompatActivity implements  MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
-
-
-=======
 public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
     private static String Correcte = "";
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
+
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
     public static MediaPlayer mPlayer;
@@ -58,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
-        createDB();
+     //   createDB();
     }
 
     //lors du lancement de l'application je lance une musique
@@ -221,13 +213,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     @Override
 
     public void update(Question question) {
-<<<<<<< HEAD
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(question)).commit();
 
-
-=======
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(question)).addToBackStack("QuestionFragment").commit();
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
+
     }
 
     @Override
@@ -236,22 +224,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         ArrayList<Question> questions = QuestionsLoader(NumStage, langue);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, this)).addToBackStack("ListeQuestionFragment").commit();
     }
-<<<<<<< HEAD
-    @Override
-    public void onBackPressed()
-    { int count = getFragmentManager().getBackStackEntryCount();
-
-       if (count == 0) {
-         super.onBackPressed();
-            //additional code
-       } else {
-         getFragmentManager().popBackStack();
-        }
 
 
-=======
-
-   /* @Override
+   @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
         if (count == 0) {
@@ -260,9 +235,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         } else {
             getFragmentManager().popBackStack();
         }
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
-        moveTaskToBack(true);
-    }*/
+    }
 /*
     public void createDB() {
         MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
@@ -285,50 +258,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     }*/
     // Fin Firas
 
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            finish();
-        } else {
-            super.onBackPressed();
-        }
-    }
 
-<<<<<<< HEAD
-
-
-    public void createDB()
-    {
-        MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
-
-        try {
-
-            myDbHelper.createDataBase();
-
-        } catch (IOException ioe) {
-
-            throw new Error("Unable to create database");
-
-        }
-
-        try {
-
-            myDbHelper.openDataBase();
-
-        }catch(SQLException sqle){
-
-            try {
-                throw sqle;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    // Fin Firas
-=======
->>>>>>> 311cdfffd901f2a2851e08d29092f585ff3c528c
 
 }
