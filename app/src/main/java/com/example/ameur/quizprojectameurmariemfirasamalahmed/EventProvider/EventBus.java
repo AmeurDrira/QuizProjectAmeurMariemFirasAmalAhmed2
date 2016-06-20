@@ -1,4 +1,4 @@
-package com.example.ameur.quizprojectameurmariemfirasamalahmed;
+package com.example.ameur.quizprojectameurmariemfirasamalahmed.EventProvider;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;

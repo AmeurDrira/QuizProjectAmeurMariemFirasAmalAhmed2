@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/fragment_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,14 +13,19 @@
     <!--ImageView
         android:id="@+id/mImage"
         android:layout_width="wrap_content"
+<<<<<<< HEAD
         android:layout_below="@+id/HeaderText"
         android:layout_height="100dp"
+=======
+        android:layout_height="200dp"
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         android:layout_gravity="top"
         android:gravity="top"
         android:maxHeight="42dp"
         android:src="@drawable/logobrain"
         /-->
 
+<<<<<<< HEAD
     <TextView android:id="@+id/HeaderText"
 
         android:textStyle="bold"
@@ -39,6 +44,10 @@
         android:text="QUIZ GAME"
         android:textSize="40dp"
         android:fontFamily="Arial"/>
+=======
+        android:maxHeight="42dp"
+        android:src="@drawable/health"
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
 
     <Button
@@ -92,18 +101,33 @@
 
     <Button
         android:id="@+id/shareFb"
+<<<<<<< HEAD
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_below="@+id/Config"
         android:layout_marginTop="16dp"
+=======
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="1dp"
+        android:layout_below="@+id/Config"
+        android:layout_marginTop="50dp"
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         android:layout_marginLeft="100dp"
         android:background="@drawable/fb" />
 
     <Button
         android:id="@+id/shareG"
+<<<<<<< HEAD
         android:layout_width="50dp"
         android:layout_height="50dp"
+=======
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:padding="1dp"
         android:layout_below="@+id/Config"
         android:layout_marginTop="16dp"
         android:layout_marginRight="100dp"

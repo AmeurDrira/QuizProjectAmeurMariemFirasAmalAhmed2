@@ -12,25 +12,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+<<<<<<< HEAD
+=======
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LoadQuestions;
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
+<<<<<<< HEAD
     private static QuestionListner questionListener;
+=======
+    private static Bus eventBus;
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     private static ArrayList<Question> questions;
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
 
+<<<<<<< HEAD
     public static ListeQuestionFragment newInstance(ArrayList<Question> q, QuestionListner qli) {
+=======
+    public static ListeQuestionFragment newInstance(ArrayList<Question> q, Bus Bus) {
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
-        questionListener = qli;
+        eventBus = Bus;
         questions = q;
         return Liste;
     }
@@ -59,9 +72,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
             public void onClick(View view, int position) {
                 ListItemWrapper liste = btmliste.get(position);
                 Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-                if (questionListener != null) {
-                    questionListener.update(questions.get(liste.getId()));
-                }
+                eventBus.post(new LoadQuestions(questions.get(liste.getId())));
             }
 
             public void onLongClick(View view, int position) {
@@ -92,9 +103,13 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     }
 
 
+<<<<<<< HEAD
     public interface QuestionListner {
         void update(Question question);
     }
+=======
+
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

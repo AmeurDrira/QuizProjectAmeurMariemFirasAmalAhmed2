@@ -14,28 +14,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
+=======
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListFragment extends Fragment implements View.OnClickListener {
 
-    private static ListedQuestionLiner questionListener;
     private RecyclerView recyclerView;
     private StageAdapter mAdapter;
     private List<ListItemWrapper> btmlist = new ArrayList<>();
     private TextView mtxt;
+    private static Bus eventBus;
 
-
-    public static ListFragment newInstance(ListedQuestionLiner question) {
+    public static ListFragment newInstance(Bus Bus) {
 
         ListFragment Liste = new ListFragment();
-        questionListener = question;
+        eventBus = Bus;
         return Liste;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -61,16 +66,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
-
             @Override
             public void onClick(View view, int position) {
                 ListItemWrapper liste1 = btmlist.get(position);
                 Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
 
                 // Log.v("eee",""+liste1.getId());
-                if (questionListener != null) {
-                    questionListener.update(liste1.getId());
-                }
+                eventBus.post(new PostStage(liste1.getId()));
             }
 
             @Override
@@ -102,9 +104,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
 
+<<<<<<< HEAD
     public interface ListedQuestionLiner {
         public void update(int NumStage);
     }
+=======
+
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

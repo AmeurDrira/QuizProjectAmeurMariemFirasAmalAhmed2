@@ -9,8 +9,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="BRAIN"
+
+        android:icon="@drawable/brain"
+        android:label="@string/app_name"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -21,6 +23,11 @@
         <provider
             android:name=".Provider.PropositionsContentProvider"
             android:authorities="quiz.projet.ahmedameuramalfirasmariem.propositionsprovider"></provider>
+<<<<<<< HEAD
+=======
+
+        <activity android:name=".activity.MainActivity">
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
     <activity
         android:name=".activity.MainActivity"
@@ -52,10 +59,18 @@
             android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:exported="true" />
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     </application>
 
 </manifest>

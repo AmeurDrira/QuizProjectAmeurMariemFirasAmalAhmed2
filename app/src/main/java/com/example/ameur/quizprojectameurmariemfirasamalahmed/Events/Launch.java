@@ -16,4 +16,8 @@ public class Launch {
     public String getBesoin() {
         return besoin;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
