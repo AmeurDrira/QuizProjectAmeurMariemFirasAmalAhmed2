@@ -32,7 +32,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     private CoordinatorLayout coordinatorLayout;
     private static Bus eventBus;
 
-    private Button mButtonN, mButtonq1, mButtonq2, mButtonq3, mButtonq4;
+    private Button  mButtonq1, mButtonq2, mButtonq3, mButtonq4;
     private ArrayList<String> propositions;
     private TextView mQuestion;
     private static int code;
@@ -75,10 +75,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id
                 .coordinatorLayout);
-
-        mButtonN = (Button) view.findViewById(R.id.button);
-        mButtonN.setOnClickListener(this);
-
 
         return view;
     }

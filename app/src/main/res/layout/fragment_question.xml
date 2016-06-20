@@ -114,15 +114,6 @@
             android:layout_gravity="center"
             android:text="Overlay with hover"/>
     </com.example.ameur.quizprojectameurmariemfirasamalahmed.MaterialRippleLayout>
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="back"
-            android:background="@color/com_facebook_blue"
-            android:shadowColor="@color/com_facebook_messenger_blue"
-           />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
 
