@@ -1,8 +1,6 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
+
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -16,57 +14,59 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
-    private static Quiz mquiz;
+    private static Question question;
+    Snackbar snackbar;
+    int i = 0;
+    String reponseCorrect;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
 
+
     private Button mButtonN,mButtonq1,mButtonq2,mButtonq3,mButtonq4;
-
-
+    private ArrayList<String> propositions;
+    private TextView mQuestion;
     public QuestionFragment() {
 
     }
 
-    public static QuestionFragment newInstance(Quiz quiz) {
+    public static QuestionFragment newInstance(Question q) {
         QuestionFragment questionFragment = new QuestionFragment();
-        mquiz = quiz;
+        question = q;
         return questionFragment;
     }
-
-    private TextView mQuestion;
-    Snackbar snackbar;
-    int i = 0;
-    String reponseCorrect;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
 
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
-        int res = getResources().getIdentifier(mquiz.getQuestion(), "string", getContext().getPackageName());
-        mQuestion.setText(String.valueOf(getResources().getString(res)));
+        mQuestion.setText(question.getQuestion());
 
+        propositions = generatePropositions(question.getProposition());
 
         mButtonq1 = (Button) view.findViewById(R.id.button1);
-        mButtonq1.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseUn(), "string", getContext().getPackageName()))));
+        mButtonq1.setText(propositions.get(0));
         mButtonq1.setOnClickListener(this);
 
         mButtonq2 = (Button) view.findViewById(R.id.button2);
-        mButtonq2.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseDeux(), "string", getContext().getPackageName()))));
+        mButtonq2.setText(propositions.get(1));
         mButtonq2.setOnClickListener(this);
 
         mButtonq3 = (Button) view.findViewById(R.id.button3);
-        mButtonq3.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseTrois(), "string", getContext().getPackageName()))));
+        mButtonq3.setText(propositions.get(2));
         mButtonq3.setOnClickListener(this);
 
         mButtonq4 = (Button) view.findViewById(R.id.button4);
-        mButtonq4.setText(String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseQuatre(), "string", getContext().getPackageName()))));
+        mButtonq4.setText(propositions.get(3));
         mButtonq4.setOnClickListener(this);
+
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id
                 .coordinatorLayout);
@@ -78,16 +78,30 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public ArrayList<String> generatePropositions(ArrayList<String> propositions) {
+        ArrayList<String> propos = new ArrayList<>();
+        propos.add(question.getCorrecte());
+        for (String p : propositions) {
+            if ((p != question.getCorrecte()) && (propos.size() <= 4)) {
+                propos.add(p);
+            }
+        }
+        Collections.shuffle(propos);
+        return propos;
+    }
+
     @Override
     public void onClick(View v) {
         int selectRadio = 0;
         String reponse = "";
-        reponseCorrect = String.valueOf(getResources().getString(getResources().getIdentifier(mquiz.getReponseCorrect(), "string", getContext().getPackageName())));
+        reponseCorrect = question.getCorrecte();
 
         switch (v.getId()) {
             case R.id.button1:
 
+
                     reponse = mButtonq1.getText().toString();
+
 
                     if (reponseCorrect.equals(reponse)) {
                         snackbar = Snackbar
