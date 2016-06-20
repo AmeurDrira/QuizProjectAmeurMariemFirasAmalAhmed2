@@ -14,10 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-=======
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
@@ -51,7 +48,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 
-      //  mtxt = (TextView) view.findViewById(R.id.txtView);
+        mtxt = (TextView) view.findViewById(R.id.txtView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mAdapter = new StageAdapter(btmlist);
@@ -104,13 +101,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
     }
 
 
-<<<<<<< HEAD
-    public interface ListedQuestionLiner {
-        public void update(int NumStage);
-    }
-=======
 
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

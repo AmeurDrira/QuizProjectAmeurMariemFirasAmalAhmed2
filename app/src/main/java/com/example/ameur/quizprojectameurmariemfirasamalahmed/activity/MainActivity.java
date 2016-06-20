@@ -1,18 +1,21 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.activity;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.MySQLiteHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.PropositionsHelper;
@@ -22,6 +25,7 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LanguageSet
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.Launch;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LoadQuestions;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.ScoreUpdate;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.PropositionsContentProvider;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.QuestionsContentProvider;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
@@ -35,44 +39,34 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.plus.PlusShare;
-<<<<<<< HEAD
-=======
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-<<<<<<< HEAD
-public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
-=======
 public class MainActivity extends AppCompatActivity{
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     private static String Correcte = "";
-
+    private static int score=0;
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
     public static MediaPlayer mPlayer;
-<<<<<<< HEAD
-
-=======
     private Bus mbus= EventBus.getInstance();
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
+    public final static String SCORE_USER="quiz.tn.SCORE";
+    public final static String MEILEURE="quiz.projet.tn.FINAL";
+    public ArrayList<Question> questions;
+    private int nombreQ=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createDB();
         setContentView(R.layout.activity_main);
+        score=RetrieveScore();
+        Log.v("score",String.valueOf(score));
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
-<<<<<<< HEAD
-
-    }
-=======
        createDB();
     }
 
@@ -92,6 +86,18 @@ public class MainActivity extends AppCompatActivity{
 
     }
     @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences shared = getSharedPreferences("UserData",Context.MODE_PRIVATE);
+        SharedPreferences.Editor write = shared.edit();
+        write.putInt(SCORE_USER,score);
+        int sf=shared.getInt(MEILEURE,0);
+        if (sf<score)
+            write.putInt(MEILEURE,score);
+        write.commit();
+
+    }
+    @Override
     protected void onResume() {
         super.onResume();
         mbus.register(this);
@@ -103,44 +109,16 @@ public class MainActivity extends AppCompatActivity{
         super.onPause();
     }
     //lors de Sortie  de l'application j'arret la  musique
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
-
-    //lors du lancement de l'application je lance une musique
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPlayer = MediaPlayer.create(MainActivity.this, R.raw.sound_track);
-        try {
-            mPlayer.setLooping(true);
-            if (getSharedPreferences("quiz", 0).getBoolean("status", false) == true)
-                mPlayer.start();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-<<<<<<< HEAD
+    private int RetrieveScore()
+    {
+        SharedPreferences shared =getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        int score=shared.getInt(SCORE_USER,0);
+        return score;
     }
 
-    //lors de Sortie  de l'application j'arret la  musique
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mPlayer.isPlaying())
-            mPlayer.release();
-    }
-
-    //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
-    private void launchMenu() {
-        FragmentTransaction fgm = getSupportFragmentManager().beginTransaction();
-        fgm.replace(R.id.main_layout, MainFragment.newInstance(this));
-        fgm.addToBackStack("MainFragment");
-        fgm.commit();
-=======
     //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
     private void launchMenu() {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, MainFragment.newInstance(mbus)).commit();
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     }
 
     //cette fonction "facebookSDKInitialize()" pour instaliser le fenetre de partage  sur facebook :)
@@ -187,10 +165,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     //cette fonction "shareG()" pour le partage sur GooglePlus :)
-<<<<<<< HEAD
-    @Override
-=======
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     public void shareG() {
         Uri selectedImage = Uri.parse("android.resource://" + getPackageName() + "/drawable/health");
 
@@ -207,14 +181,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void launchListeStage() {
-<<<<<<< HEAD
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(this)).addToBackStack("ListFragment").commit();
-    }
-
-    //cette fonction "changeLanguageSettings(String lang)" lang=en|fr pour le changement du langue du fr au en et vis vers ca :)
-    public void changeLanguageSettings(String lang) {
-        Locale locale = new Locale(lang);
-=======
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
 
     }
@@ -223,19 +189,15 @@ public class MainActivity extends AppCompatActivity{
     @Subscribe public void changeLanguageSettings(LanguageSettings ls) {
 
         Locale locale = new Locale(ls.getLanguage());
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
+
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     // populate Propositions Array from database depends of question id
     private ArrayList<String> generatePropositions(int idQuestion, int correctOne, String langue) {
         int idLangue;
@@ -285,37 +247,46 @@ public class MainActivity extends AppCompatActivity{
         return qestions;
     }
 
-<<<<<<< HEAD
-    @Override
-
-    public void update(Question question) {
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(question)).addToBackStack("QuestionFragment").commit();
-=======
     @Subscribe
     public void updateQuestion(LoadQuestions lq) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(lq.getQuestion())).commit();
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(lq.getQuestion(),mbus,lq.getCode())).addToBackStack("QCM").commit();
 
+    }
+    @Subscribe public void UpdateScore (ScoreUpdate su)
+    {
+        int niveau;
+        nombreQ++;
+        if (nombreQ<10)
+        {
+            score += su.getScore();
+            if (su.getCode() > 8) {
+                niveau = 0;
+            }
+            else {
+                niveau = su.getCode() + 1;
+            }
+            Question q = questions.get(niveau);
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = QuestionFragment.newInstance(q, mbus, niveau);
+            trans.replace(R.id.main_layout, fragment, "QCM").commit();
+        }
+        else
+        {
+            Log.v("score",String.valueOf(score));
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
+        }
     }
 
     @Subscribe
     public void updateStage(PostStage ps)
     {
+        nombreQ=1;
         String langue = Locale.getDefault().getLanguage();
-<<<<<<< HEAD
-        ArrayList<Question> questions = QuestionsLoader(NumStage, langue);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, this)).addToBackStack("ListeQuestionFragment").commit();
-    }
-
-
-=======
-        ArrayList<Question> questions =QuestionsLoader(ps.getStage(),langue);
+         questions =QuestionsLoader(ps.getStage(),langue);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, mbus)).commit();
 
     }
 
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
    @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
@@ -327,38 +298,32 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-<<<<<<< HEAD
-    public void createDB() {
-=======
     public void createDB()
     {
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
+
         try {
+
             myDbHelper.createDataBase();
+
         } catch (IOException ioe) {
+
             throw new Error("Unable to create database");
+
         }
+
         try {
+
             myDbHelper.openDataBase();
-<<<<<<< HEAD
-        } catch (SQLException sqle) {
-=======
 
         }catch(java.sql.SQLException sqle){
 
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
             try {
                 throw sqle;
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
             }
-<<<<<<< HEAD
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
-=======
 
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         }
     }
 
@@ -386,8 +351,6 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
-
-
 
 
 }

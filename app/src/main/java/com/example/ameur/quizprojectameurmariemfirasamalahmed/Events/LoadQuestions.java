@@ -7,16 +7,15 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
  */
 public class LoadQuestions {
     private Question question;
-    public LoadQuestions(Question question)
+    private int code;
+    public LoadQuestions(Question question,int code)
+
     {
         this.question=question;
+        this.code=code;
     }
-
+    public int getCode (){return  code;}
     public Question getQuestion() {
         return question;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350

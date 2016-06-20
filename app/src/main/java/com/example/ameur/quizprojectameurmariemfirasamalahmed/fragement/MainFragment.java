@@ -14,7 +14,6 @@ import com.squareup.otto.Bus;
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private static MainMenuListener mMainMenuListener;
     private Button mResume;
     private Button mStart;
     private Button mConfig;
@@ -22,11 +21,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private Button mShareG;
     private static Bus eventBus;
 
-<<<<<<< HEAD
-    public static MainFragment newInstance(MainMenuListener listener) {
-=======
     public static MainFragment newInstance(Bus Bus) {
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         MainFragment fragment = new MainFragment();
         eventBus = Bus;
         return fragment;
@@ -54,20 +49,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shareFb:
-<<<<<<< HEAD
-                mMainMenuListener.sharefb();//c'est l'appel de la methode pour partager sur fb :)
-                break;
-            case R.id.Config:
-                mMainMenuListener.launchConfig();//c'est l'appel de la methode pour changer la langue et active/desactiver Sound:)
-                break;
-            case R.id.Start:
-                mMainMenuListener.launchListeStage();
-
-                break;
-            case R.id.shareG:
-                mMainMenuListener.shareG();
-
-=======
                 eventBus.post(new Launch("fcbk"));
                 break;
             case R.id.Config:
@@ -78,7 +59,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.Start:
                 eventBus.post(new Launch("listeStage"));
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
                 break;
 
 
@@ -86,18 +66,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     }
 
-<<<<<<< HEAD
-    //C'est notre listener
-    public interface MainMenuListener {
-        public void sharefb();
-
-        public void launchConfig();
-
-        public void shareG();
-
-        public void launchListeStage();
-=======
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
 
 }

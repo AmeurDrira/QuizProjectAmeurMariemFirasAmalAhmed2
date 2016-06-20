@@ -48,13 +48,8 @@ public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListItemWrapper liste = btmliste.get(position);
         holder.mItemTitle.setText(liste.getTitle());
-<<<<<<< HEAD
-        // if(position == position)
-        //  holder.itemView.setBackgroundColor(Color.BLUE);
-=======
         if (position == position)
             holder.itemView.setBackgroundColor(Color.GRAY);
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
         //else
         //holder.itemView.setBackgroundColor(Color.RED);
 

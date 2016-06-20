@@ -16,20 +16,13 @@ import android.widget.Switch;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LanguageSettings;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-<<<<<<< HEAD
-=======
 import com.squareup.otto.Bus;
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
 
 import java.util.Locale;
 
 
 public class ConfigFragment extends DialogFragment {
-<<<<<<< HEAD
-    private static ConfigListener mConfigListener;
-=======
     private static Bus eventBus;
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
@@ -46,10 +39,7 @@ public class ConfigFragment extends DialogFragment {
         return fragment;
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> c18336815321daceded7b205fd5a0e21efa4e350
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
