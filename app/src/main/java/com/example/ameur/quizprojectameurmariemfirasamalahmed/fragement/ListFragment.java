@@ -1,9 +1,5 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,36 +14,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by PROXIMEDIA-PC on 17/05/2016.
- */
 public class ListFragment extends Fragment implements View.OnClickListener {
 
-    private static ListedQuestionLiner questionListener;
     private RecyclerView recyclerView;
     private StageAdapter mAdapter;
     private List<ListItemWrapper> btmlist = new ArrayList<>();
     private TextView mtxt;
+    private static Bus eventBus;
 
-
-    public static ListFragment newInstance(ListedQuestionLiner question) {
+    public static ListFragment newInstance(Bus Bus) {
 
         ListFragment Liste = new ListFragment();
-        questionListener = question;
+        eventBus = Bus;
         return Liste;
     }
 
+
     @Override
     public void onClick(View v) {
-
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,16 +63,13 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
-
             @Override
             public void onClick(View view, int position) {
                 ListItemWrapper liste1 = btmlist.get(position);
                 Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
 
                 // Log.v("eee",""+liste1.getId());
-                if (questionListener != null) {
-                    questionListener.update(liste1.getId());
-                }
+                eventBus.post(new PostStage(liste1.getId()));
             }
 
             @Override
@@ -94,12 +84,23 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    public void addB() {
+        ListItemWrapper liste1;
+        for (int i = 1; i < 6; i++) {
+            liste1 = new ListItemWrapper(i, "Stage " + i);
+            btmlist.add(liste1);
+        }
+
+    }
+
 
     public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
     }
+
+
 
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
@@ -144,19 +145,5 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-
-    public void addB() {
-        ListItemWrapper liste1;
-        for (int i = 1; i < 6; i++) {
-            liste1 = new ListItemWrapper(i, "Stage " + i);
-            btmlist.add(liste1);
-        }
-
-    }
-
-    public interface ListedQuestionLiner {
-        public void update(int NumStage);
     }
 }

@@ -9,36 +9,34 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LanguageSettings;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
-
+import com.squareup.otto.Bus;
 
 import java.util.Locale;
 
 
 public class ConfigFragment extends DialogFragment {
+    private static Bus eventBus;
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
-    private Switch mSwitchButtonSound;
 
     private int selectRadio = 0;
-
-    private static ConfigListener mConfigListener;
-
-    public static ConfigFragment newInstance(ConfigListener listener) {
-        ConfigFragment fragment = new ConfigFragment();
-        mConfigListener = listener;
-        return fragment;
-    }
-
-
+    private Switch switchSound;
 
     public ConfigFragment() {
+    }
+
+    public static ConfigFragment newInstance(Bus Bus) {
+        eventBus = Bus;
+        ConfigFragment fragment = new ConfigFragment();
+        return fragment;
     }
 
 
@@ -64,6 +62,23 @@ public class ConfigFragment extends DialogFragment {
         radiolangugeEN.setText("English");
 
 
+        switchSound = (Switch) dialogView.findViewById(R.id.switchButtonSound);
+        if (getActivity().getSharedPreferences("quiz", 0).getBoolean("status", false) == true) {
+            switchSound.setChecked(true);
+
+        } else {
+            switchSound.setChecked(false);
+
+        }
+
+
+        switchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getActivity().getSharedPreferences("quiz", 0).edit().putBoolean("status", isChecked).commit();
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -76,9 +91,9 @@ public class ConfigFragment extends DialogFragment {
                         radioGenderButton = (RadioButton) dialogView.findViewById(selectRadio);
                         reponse = radioGenderButton.getText().toString();
                         if (!reponse.isEmpty() && reponse.equals("English")) {
-                            mConfigListener.changeLanguageSettings("en");
+                            eventBus.post(new LanguageSettings("en"));
                         } else if (!reponse.isEmpty() && reponse.equals("Français")) {
-                            mConfigListener.changeLanguageSettings("fr");
+                            eventBus.post(new LanguageSettings("fr"));
                         }
 
                     }
@@ -89,10 +104,6 @@ public class ConfigFragment extends DialogFragment {
 
     }
 
-    public interface ConfigListener {
-        public void changeLanguageSettings(String lang);
-
-    }
 
 
 }

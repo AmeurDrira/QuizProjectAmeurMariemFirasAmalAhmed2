@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by !l-PazZ0 on 28/04/2016.
  */
-public class Question implements Serializable{
+public class Question implements Serializable {
 
     @SerializedName("Question")
     private String question;
@@ -43,7 +43,6 @@ public class Question implements Serializable{
     public void setCorrecte(String correcte) {
         this.correcte = correcte;
     }
-
 
 
 }

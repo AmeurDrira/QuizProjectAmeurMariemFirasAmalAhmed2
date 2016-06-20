@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.Launch;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.squareup.otto.Bus;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener {
@@ -17,15 +19,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private Button mConfig;
     private Button mShareFb;
     private Button mShareG;
+    private static Bus eventBus;
 
-    private static MainMenuListener mMainMenuListener;
-
-    public static MainFragment newInstance(MainMenuListener listener) {
+    public static MainFragment newInstance(Bus Bus) {
         MainFragment fragment = new MainFragment();
-        mMainMenuListener = listener;
+        eventBus = Bus;
         return fragment;
-    }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -48,24 +49,23 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shareFb:
-                mMainMenuListener.sharefb();
+                eventBus.post(new Launch("fcbk"));
                 break;
             case R.id.Config:
-                mMainMenuListener.launchConfig();
+                eventBus.post(new Launch("config"));
+                break;
+            case R.id.shareG:
+                eventBus.post(new Launch("google"));
                 break;
             case R.id.Start:
-                mMainMenuListener.launchListeStage();
+                eventBus.post(new Launch("listeStage"));
                 break;
+
 
         }
 
     }
 
-    public interface MainMenuListener {
-        public void sharefb();
-        public void launchConfig();
-        public void launchListeStage();
 
-    }
 
 }

@@ -1,8 +1,6 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
-/**
- * Created by makni on 17/05/2016.
- */
+
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -17,24 +15,23 @@ import android.widget.TextView;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
-import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
-import com.facebook.internal.CollectionMapper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
     private static Question question;
+    Snackbar snackbar;
+    int i = 0;
+    String reponseCorrect;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
 
 
     private Button mButtonN,mButtonq1,mButtonq2,mButtonq3,mButtonq4;
     private ArrayList<String> propositions;
-
-
+    private TextView mQuestion;
     public QuestionFragment() {
 
     }
@@ -45,12 +42,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         return questionFragment;
     }
 
-    private TextView mQuestion;
-    Snackbar snackbar;
-    int i = 0;
-    String reponseCorrect;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
@@ -58,6 +49,7 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
         mQuestion.setText(question.getQuestion());
 
+        propositions = generatePropositions(question.getProposition());
 
         mButtonq1 = (Button) view.findViewById(R.id.button1);
         mButtonq1.setText(propositions.get(0));
@@ -85,20 +77,19 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         return view;
     }
-    public ArrayList<String> generatePropositions(ArrayList<String>propositions)
-    {
-        ArrayList<String> propos=new ArrayList<>();
+
+    public ArrayList<String> generatePropositions(ArrayList<String> propositions) {
+        ArrayList<String> propos = new ArrayList<>();
         propos.add(question.getCorrecte());
-        for (String p:propositions)
-        {
-            if ((p!=question.getCorrecte()) && (propos.size()<=4))
-            {
+        for (String p : propositions) {
+            if ((p != question.getCorrecte()) && (propos.size() <= 4)) {
                 propos.add(p);
             }
         }
         Collections.shuffle(propos);
         return propos;
     }
+
     @Override
     public void onClick(View v) {
         int selectRadio = 0;

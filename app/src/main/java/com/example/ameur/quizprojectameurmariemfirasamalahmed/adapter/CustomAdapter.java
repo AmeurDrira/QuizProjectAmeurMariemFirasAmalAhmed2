@@ -16,14 +16,13 @@ import java.util.List;
 /**
  * Created by makni on 17/05/2016.
  */
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>  {
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
     private List<ListItemWrapper> btmliste;
 
 
-
     public CustomAdapter(List<ListItemWrapper> btmliste) {
-        this.btmliste=btmliste;
+        this.btmliste = btmliste;
     }
 
     @Override
@@ -31,8 +30,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         return btmliste.size();
     }
-
-
 
 
     @Override
@@ -51,7 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListItemWrapper liste = btmliste.get(position);
         holder.mItemTitle.setText(liste.getTitle());
-        if(position == position)
+        if (position == position)
             holder.itemView.setBackgroundColor(Color.GRAY);
         else
             holder.itemView.setBackgroundColor(Color.RED);
@@ -73,8 +70,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         }
     }
-
-
 
 
 }
