@@ -3,8 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorButton">#91b740</color>#66ccce
+    <color name="colorButton">#91b740</color>
+    <color name="colorRecycle">#00099c</color>
     <color name="colorQuestion">#66ccce</color>
     <color name="colorFont">#f7f7ed</color>
     <color name="colorNext">#ff999a</color>
+
+    <color name="light_font">#FBFBFB</color>
+    <color name="grey_font">#ff9e9e9e</color>
+    <color name="text_shadow">#369599</color>
+    <color name="text_shadow_white">#FFFFFF</color>
+
 </resources>

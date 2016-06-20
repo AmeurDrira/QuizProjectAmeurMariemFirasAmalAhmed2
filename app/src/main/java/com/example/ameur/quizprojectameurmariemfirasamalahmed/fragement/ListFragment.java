@@ -1,6 +1,7 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,12 +17,15 @@ import android.widget.Toast;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
 import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity.*;
 
 public class ListFragment extends Fragment implements View.OnClickListener {
 
@@ -47,17 +51,17 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-
-        mtxt = (TextView) view.findViewById(R.id.txtView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mAdapter = new StageAdapter(btmlist);
-
+     /*   TextView   mtxt = (TextView)view.findViewById(R.id.txtStage);
+        Log.v("ssss",String.valueOf(score));
+mtxt.setText(score);
+*/
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         Log.v("eee", "" + mLayoutManager);
-
 
         recyclerView.setAdapter(mAdapter);
 
@@ -92,7 +96,6 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
 
     public interface ClickListener {
         void onClick(View view, int position);

@@ -7,19 +7,27 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/fragment_list"
     android:id="@+id/fragment_list"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    android:background="@drawable/bg">
     <TextView
         android:layout_width="match_parent"
-        android:id="@+id/txtView"
+        android:id="@+id/txtStage"
         android:text="Liste des stages"
-
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="30dp"
+        android:layout_marginBottom="16dp"
         android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/txtView"
+
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:scrollbars="vertical"
+        android:layout_below="@id/txtStage"
+        android:layout_marginTop="50dp"
         />
 
 

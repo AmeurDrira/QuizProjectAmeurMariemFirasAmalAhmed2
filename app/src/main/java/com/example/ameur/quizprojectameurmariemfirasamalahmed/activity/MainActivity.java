@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.MySQLiteHelper;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Database.PropositionsHelper;
@@ -49,7 +50,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
     private static String Correcte = "";
-    private static int score=0;
+    public static int score=0;
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
     public static MediaPlayer mPlayer;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity{
         super.onPause();
     }
     //lors de Sortie  de l'application j'arret la  musique
-    private int RetrieveScore()
+    public  int RetrieveScore()
     {
         SharedPreferences shared =getSharedPreferences("UserData", Context.MODE_PRIVATE);
         int score=shared.getInt(SCORE_USER,0);
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void launchListeStage() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
+           getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
 
     }
 
