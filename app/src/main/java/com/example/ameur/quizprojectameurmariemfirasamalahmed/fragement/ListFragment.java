@@ -46,7 +46,7 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 
-        mtxt = (TextView) view.findViewById(R.id.txtView);
+      //  mtxt = (TextView) view.findViewById(R.id.txtView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mAdapter = new StageAdapter(btmlist);

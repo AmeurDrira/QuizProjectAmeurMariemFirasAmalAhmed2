@@ -16,13 +16,14 @@ import java.util.List;
 /**
  * Created by makni on 17/05/2016.
  */
-public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> {
+public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder>  {
 
     private List<ListItemWrapper> btmliste;
 
 
+
     public StageAdapter(List<ListItemWrapper> btmliste) {
-        this.btmliste = btmliste;
+        this.btmliste=btmliste;
     }
 
     @Override
@@ -30,6 +31,8 @@ public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> 
 
         return btmliste.size();
     }
+
+
 
 
     @Override
@@ -48,8 +51,8 @@ public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListItemWrapper liste = btmliste.get(position);
         holder.mItemTitle.setText(liste.getTitle());
-        if (position == position)
-            holder.itemView.setBackgroundColor(Color.GRAY);
+        // if(position == position)
+        //  holder.itemView.setBackgroundColor(Color.BLUE);
         //else
         //holder.itemView.setBackgroundColor(Color.RED);
 
@@ -70,6 +73,8 @@ public class StageAdapter extends RecyclerView.Adapter<StageAdapter.ViewHolder> 
 
         }
     }
+
+
 
 
 }

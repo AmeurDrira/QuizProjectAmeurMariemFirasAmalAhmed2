@@ -46,11 +46,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createDB();
         setContentView(R.layout.activity_main);
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
-     //   createDB();
+
     }
 
     //lors du lancement de l'application je lance une musique
@@ -236,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
             getFragmentManager().popBackStack();
         }
     }
-/*
+
     public void createDB() {
         MySQLiteHelper myDbHelper = new MySQLiteHelper(this);
         try {
@@ -255,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
     // Fin Firas
 
 
