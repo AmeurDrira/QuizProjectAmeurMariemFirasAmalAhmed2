@@ -1,16 +1,18 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.activity;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LanguageSet
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.Launch;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LoadQuestions;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.ScoreUpdate;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.PropositionsContentProvider;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Provider.QuestionsContentProvider;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
@@ -46,15 +49,21 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
     private static String Correcte = "";
-
+    private static int score=0;
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
     public static MediaPlayer mPlayer;
     private Bus mbus= EventBus.getInstance();
+    public final static String SCORE_USER="quiz.tn.SCORE";
+    public final static String MEILEURE="quiz.projet.tn.FINAL";
+    public ArrayList<Question> questions;
+    private int nombreQ=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        score=RetrieveScore();
+        Log.v("score",String.valueOf(score));
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
@@ -77,6 +86,18 @@ public class MainActivity extends AppCompatActivity{
 
     }
     @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences shared = getSharedPreferences("UserData",Context.MODE_PRIVATE);
+        SharedPreferences.Editor write = shared.edit();
+        write.putInt(SCORE_USER,score);
+        int sf=shared.getInt(MEILEURE,0);
+        if (sf<score)
+            write.putInt(MEILEURE,score);
+        write.commit();
+
+    }
+    @Override
     protected void onResume() {
         super.onResume();
         mbus.register(this);
@@ -88,7 +109,12 @@ public class MainActivity extends AppCompatActivity{
         super.onPause();
     }
     //lors de Sortie  de l'application j'arret la  musique
-
+    private int RetrieveScore()
+    {
+        SharedPreferences shared =getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        int score=shared.getInt(SCORE_USER,0);
+        return score;
+    }
 
     //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
     private void launchMenu() {
@@ -223,15 +249,40 @@ public class MainActivity extends AppCompatActivity{
 
     @Subscribe
     public void updateQuestion(LoadQuestions lq) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(lq.getQuestion())).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(lq.getQuestion(),mbus,lq.getCode())).addToBackStack("QCM").commit();
 
+    }
+    @Subscribe public void UpdateScore (ScoreUpdate su)
+    {
+        int niveau;
+        nombreQ++;
+        if (nombreQ<10)
+        {
+            score += su.getScore();
+            if (su.getCode() > 8) {
+                niveau = 0;
+            }
+            else {
+                niveau = su.getCode() + 1;
+            }
+            Question q = questions.get(niveau);
+            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = QuestionFragment.newInstance(q, mbus, niveau);
+            trans.replace(R.id.main_layout, fragment, "QCM").commit();
+        }
+        else
+        {
+            Log.v("score",String.valueOf(score));
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
+        }
     }
 
     @Subscribe
     public void updateStage(PostStage ps)
     {
+        nombreQ=1;
         String langue = Locale.getDefault().getLanguage();
-        ArrayList<Question> questions =QuestionsLoader(ps.getStage(),langue);
+         questions =QuestionsLoader(ps.getStage(),langue);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, mbus)).commit();
 
     }

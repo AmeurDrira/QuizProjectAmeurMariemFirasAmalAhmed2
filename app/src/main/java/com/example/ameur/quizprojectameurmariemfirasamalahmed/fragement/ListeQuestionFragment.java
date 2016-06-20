@@ -61,7 +61,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
             public void onClick(View view, int position) {
                 ListItemWrapper liste = btmliste.get(position);
                 Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-                eventBus.post(new LoadQuestions(questions.get(liste.getId())));
+                eventBus.post(new LoadQuestions(questions.get(liste.getId()),liste.getId()));
             }
 
             public void onLongClick(View view, int position) {
