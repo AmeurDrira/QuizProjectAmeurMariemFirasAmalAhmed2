@@ -3,30 +3,33 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     card_view:cardCornerRadius="4dp"
+    card_view:cardBackgroundColor="#f7f2ee"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight">
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        >
         <ImageView
+            android:id="@+id/lock1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@android:drawable/ic_lock_idle_lock"
+            android:src="@drawable/lock1"
             />
 
         <TextView
             android:id="@+id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/lock1"
             android:textSize="30dp"
+            android:textColor="@color/text_shadow"
             android:singleLine="true"
+            android:layout_centerVertical="true"
             android:textAlignment="center"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorQuestion" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
         <TextView
             android:id="@+id/score_stage"
             android:layout_width="match_parent"

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
@@ -27,19 +26,10 @@ import java.util.List;
  */
 public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
     private static QuestionListner questionListener;
-
-
+    private static ArrayList<Quiz> mquizs;
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
-    private static ArrayList<Quiz> mquizs;
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 
     public static ListeQuestionFragment newInstance(ArrayList<Quiz> mquiz, QuestionListner qli) {
 
@@ -54,6 +44,11 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
 
 
         return Liste;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +89,15 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
+    public void addBtm() {
+        ListItemWrapper liste;
+        for (int i = 0; i < 9; i++) {
+            liste = new ListItemWrapper(i, "q" + (i + 1));
+            btmliste.add(liste);
+        }
+
+    }
+
 
     public interface ClickListener {
         void onClick(View view, int position);
@@ -101,6 +105,10 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         void onLongClick(View view, int position);
     }
 
+
+    public interface QuestionListner {
+        public void update(Quiz mQuiz);
+    }
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
@@ -144,20 +152,6 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
-
-
-    public void addBtm() {
-        ListItemWrapper liste;
-        for (int i = 0; i < 9; i++) {
-            liste = new ListItemWrapper(i, "q" + (i + 1));
-            btmliste.add(liste);
-        }
-
-    }
-
-    public interface QuestionListner {
-        public void update(Quiz mQuiz);
     }
 
 

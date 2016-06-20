@@ -37,7 +37,6 @@ public class ConfigFragment extends DialogFragment {
     }
 
 
-
     public ConfigFragment() {
     }
 

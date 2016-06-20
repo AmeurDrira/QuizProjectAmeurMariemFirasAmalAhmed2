@@ -3,6 +3,7 @@ package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 /**
  * Created by makni on 17/05/2016.
  */
+
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -21,11 +22,14 @@ import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Quiz;
 
 public class QuestionFragment extends Fragment implements View.OnClickListener {
     private static Quiz mquiz;
+    Snackbar snackbar;
+    int i = 0;
+    String reponseCorrect;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
     private RadioButton radioButton, radioButton2, radioButton3, radioButton4, radioGenderButton = null;
     private Button mButtonR;
-
+    private TextView mQuestion;
 
     public QuestionFragment() {
 
@@ -36,12 +40,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
         mquiz = quiz;
         return questionFragment;
     }
-
-    private TextView mQuestion;
-    Snackbar snackbar;
-    int i = 0;
-    String reponseCorrect;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,7 +95,6 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
                     if (reponseCorrect.equals(reponse)) {
                         snackbar = Snackbar
                                 .make(coordinatorLayout, "Bravo", Snackbar.LENGTH_LONG);
-                        mquiz.setScore(mquiz.getScore()+1);
                         snackbar.show();
                         radioGroup.clearCheck();
 

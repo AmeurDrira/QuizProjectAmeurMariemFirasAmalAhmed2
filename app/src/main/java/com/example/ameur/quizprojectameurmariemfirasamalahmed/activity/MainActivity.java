@@ -32,9 +32,10 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements MainFragment.MainMenuListener, ConfigFragment.ConfigListener, ListeQuestionFragment.QuestionListner, ListFragment.ListedQuestionLiner {
 
 
+    ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
-
+    //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +43,21 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         setContentView(R.layout.activity_main);
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
-
         launchMenu();
     }
-    //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
-
+//cette fonction "facebookSDKInitialize()" pour instaliser le fenetre de partage  sur facebook :)
 
     private void launchMenu() {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, MainFragment.newInstance(this)).commit();
     }
-//cette fonction "facebookSDKInitialize()" pour instaliser le fenetre de partage  sur facebook :)
+
+//cette fonction "sharefb()" pour le partage sur facebook :)
 
     private void facebookSDKInitialize() {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
     }
-
-//cette fonction "sharefb()" pour le partage sur facebook :)
+//cette fonction "launchConfig()" pour lancer le dialog fragement de changement de langue :)
 
     public void sharefb() {
 
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
             shareDialog.show(linkContent);
         }
     }
-//cette fonction "launchConfig()" pour lancer le dialog fragement de changement de langue :)
 
     public void launchConfig() {
         ConfigFragment configFragment = ConfigFragment.newInstance(this);
@@ -81,11 +79,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         configFragment.show(getSupportFragmentManager(), "");
     }
 
-
     public void launchListeStage() {
         //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_list, ListFragment.newInstance()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(this)).commit();
     }
+
+
+    // Debut Firas
 
     //cette fonction "changeLanguageSettings(String lang)" lang=en|fr pour le changement du langue du fr au en et vis vers ca :)
     public void changeLanguageSettings(String lang) {
@@ -100,12 +100,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
-
-    // Debut Firas
-
-    ArrayList<Quiz> mquizs = new ArrayList<Quiz>();
-
 
     public String loadJSONFromAsset() {
         String json = null;
@@ -139,9 +133,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         java.util.ArrayList<Quiz> mQuiz = new ArrayList<>();
         int mNiv;
         for (Quiz q : mquizs) {
-         //   Log.v("gettt", q.getQuestion());
+            //   Log.v("gettt", q.getQuestion());
             mNiv = q.getNiveau();
-         //   Log.v("iit", mNiv + "");
+            //   Log.v("iit", mNiv + "");
             if (mNiv == mStage)
                 mQuiz.add(q);
         }
@@ -151,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
 
     @Override
     public void update(Quiz mQuiz) {
-         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, QuestionFragment.newInstance(mQuiz)).commit();
 
     }
 
@@ -165,9 +159,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(mQuizs, this)).commit();
 
     }
+
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         moveTaskToBack(true);
 
     }
