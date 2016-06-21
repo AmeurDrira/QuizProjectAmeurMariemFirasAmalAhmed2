@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.Launch;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
 import com.squareup.otto.Bus;
 
 
@@ -27,6 +28,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         return fragment;
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -60,12 +62,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             case R.id.Start:
                 eventBus.post(new Launch("listeStage"));
                 break;
-
-
+       /*
+       case R.id.Resume:
+                MainActivity.score = 0;
+                break;
+*/
         }
 
     }
-
 
 
 }

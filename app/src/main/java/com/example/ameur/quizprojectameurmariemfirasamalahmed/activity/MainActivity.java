@@ -277,7 +277,13 @@ public class MainActivity extends AppCompatActivity{
             getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
         }
     }
-
+    /*
+    @Subscribe public void ReseteScore (ScoreUpdate su)
+    {
+        score=0;
+        su.SetScore(0);
+    }
+    */
     @Subscribe
     public void updateStage(PostStage ps)
     {

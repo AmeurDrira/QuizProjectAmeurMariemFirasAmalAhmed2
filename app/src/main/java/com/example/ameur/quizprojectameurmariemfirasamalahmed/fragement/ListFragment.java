@@ -54,10 +54,10 @@ public class ListFragment extends Fragment implements View.OnClickListener {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mAdapter = new StageAdapter(btmlist);
-     /*   TextView   mtxt = (TextView)view.findViewById(R.id.txtStage);
-        Log.v("ssss",String.valueOf(score));
-mtxt.setText(score);
-*/
+        TextView mtxt = (TextView) view.findViewById(R.id.txtStage);
+     //   Log.v("ssss", String.valueOf(score));
+        mtxt.setText("Score : "+ String.valueOf(score));
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -70,10 +70,40 @@ mtxt.setText(score);
             @Override
             public void onClick(View view, int position) {
                 ListItemWrapper liste1 = btmlist.get(position);
-                Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
 
                 // Log.v("eee",""+liste1.getId());
+                int stage =liste1.getId();
+                if(stage==1)
                 eventBus.post(new PostStage(liste1.getId()));
+                if (stage==2)
+                {
+                    if(score>50)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==3)
+                {
+                    if(score>100)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==4)
+                {
+                    if(score>150)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==5)
+                {
+                    if(score>200)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
             }
 
             @Override
@@ -102,8 +132,6 @@ mtxt.setText(score);
 
         void onLongClick(View view, int position);
     }
-
-
 
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {

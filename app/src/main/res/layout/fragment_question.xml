@@ -38,7 +38,7 @@
         <com.example.ameur.quizprojectameurmariemfirasamalahmed.MaterialRippleLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffff00"
+            android:background="@color/colorQuestion"
             app:mrl_rippleOverlay="true"
             app:mrl_rippleColor="#585858"
             app:mrl_rippleAlpha="0.2"
@@ -60,7 +60,7 @@
         <com.example.ameur.quizprojectameurmariemfirasamalahmed.MaterialRippleLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffff00"
+            android:background="@color/colorQuestion"
             app:mrl_rippleOverlay="true"
             app:mrl_rippleColor="#585858"
             app:mrl_rippleAlpha="0.2"
@@ -79,7 +79,7 @@
         <com.example.ameur.quizprojectameurmariemfirasamalahmed.MaterialRippleLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffff00"
+            android:background="@color/colorQuestion"
             app:mrl_rippleOverlay="true"
             app:mrl_rippleColor="#585858"
             app:mrl_rippleAlpha="0.2"
@@ -98,7 +98,7 @@
         <com.example.ameur.quizprojectameurmariemfirasamalahmed.MaterialRippleLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffff00"
+            android:background="@color/colorQuestion"
             app:mrl_rippleOverlay="true"
             app:mrl_rippleColor="#585858"
             app:mrl_rippleAlpha="0.2"

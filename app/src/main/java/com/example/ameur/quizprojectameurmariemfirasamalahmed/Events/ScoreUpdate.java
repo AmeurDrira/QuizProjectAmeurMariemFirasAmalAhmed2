@@ -19,4 +19,5 @@ public class ScoreUpdate {
     public int getScore() {
         return score;
     }
+ /*   public void SetScore(int score) { this.score=score; }*/
 }
