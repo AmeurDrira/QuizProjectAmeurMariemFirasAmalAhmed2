@@ -57,18 +57,20 @@ public class MainActivity extends AppCompatActivity{
     private Bus mbus= EventBus.getInstance();
     public final static String SCORE_USER="quiz.tn.SCORE";
     public final static String MEILEURE="quiz.projet.tn.FINAL";
+    public final static String STAGE_PASSE="quiz.projet.tn.FINAL";
     public ArrayList<Question> questions;
+    public static List<Integer>stages_Passe;
     private int nombreQ=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         score=RetrieveScore();
-        Log.v("score",String.valueOf(score));
+        stages_Passe=RetrieveStages();
         facebookSDKInitialize();
         shareDialog = new ShareDialog(this);
         launchMenu();
-       createDB();
+        createDB();
     }
 
     //lors du lancement de l'application je lance une musique
@@ -97,6 +99,9 @@ public class MainActivity extends AppCompatActivity{
             write.putInt(MEILEURE,score);
         write.commit();
 
+        String stagesEff =stages_Passe.toString();
+        write.putString("Stages_pass",stagesEff.substring(1, stagesEff.length()-1));
+        write.commit();
     }
     @Override
     protected void onResume() {
@@ -110,13 +115,30 @@ public class MainActivity extends AppCompatActivity{
         super.onPause();
     }
     //lors de Sortie  de l'application j'arret la  musique
-    public  int RetrieveScore()
+    private int RetrieveScore()
     {
         SharedPreferences shared =getSharedPreferences("UserData", Context.MODE_PRIVATE);
         int score=shared.getInt(SCORE_USER,0);
         return score;
     }
+    public List<Integer> RetrieveStages()
+    {
+        List<Integer> stages=new ArrayList<Integer>();
 
+        SharedPreferences shared =getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String mesStages=shared.getString("Stages_pass",null);
+        if (mesStages!=null)
+        {
+            String[] items = mesStages.split(",");
+            for (String item : items)
+            {
+                String s=item.replaceAll("\\s","");
+                stages.add(Integer.valueOf(s));
+            }
+        }
+        return stages;
+
+    }
     //cette fonction "launchMenu()" pour lancer le fragement Menu la premiere interface de notre jeu Quizz :)
     private void launchMenu() {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, MainFragment.newInstance(mbus)).commit();
@@ -182,7 +204,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void launchListeStage() {
-           getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
 
     }
 
@@ -255,6 +277,7 @@ public class MainActivity extends AppCompatActivity{
     }
     @Subscribe public void UpdateScore (ScoreUpdate su)
     {
+        stages_Passe.add(su.getCode());
         int niveau;
         nombreQ++;
         if (nombreQ<10)
@@ -277,24 +300,18 @@ public class MainActivity extends AppCompatActivity{
             getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListFragment.newInstance(mbus)).addToBackStack("ListFragment").commit();
         }
     }
-    /*
-    @Subscribe public void ReseteScore (ScoreUpdate su)
-    {
-        score=0;
-        su.SetScore(0);
-    }
-    */
+
     @Subscribe
     public void updateStage(PostStage ps)
     {
         nombreQ=1;
         String langue = Locale.getDefault().getLanguage();
-         questions =QuestionsLoader(ps.getStage(),langue);
+        questions =QuestionsLoader(ps.getStage(),langue);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, ListeQuestionFragment.newInstance(questions, mbus)).commit();
 
     }
 
-   @Override
+    @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
         if (count == 0) {
