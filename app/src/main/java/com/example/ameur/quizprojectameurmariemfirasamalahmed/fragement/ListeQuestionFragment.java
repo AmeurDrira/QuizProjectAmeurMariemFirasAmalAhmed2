@@ -12,25 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LoadQuestions;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.CustomAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListeQuestionFragment extends Fragment implements View.OnClickListener {
-    private static QuestionListner questionListener;
+    private static Bus eventBus;
     private static ArrayList<Question> questions;
     private RecyclerView recyclerView;
     private CustomAdapter mAdapter;
     private List<ListItemWrapper> btmliste = new ArrayList<>();
 
-    public static ListeQuestionFragment newInstance(ArrayList<Question> q, QuestionListner qli) {
+    public static ListeQuestionFragment newInstance(ArrayList<Question> q, Bus Bus) {
 
         ListeQuestionFragment Liste = new ListeQuestionFragment();
-        questionListener = qli;
+        eventBus = Bus;
         questions = q;
         return Liste;
     }
@@ -59,9 +61,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
             public void onClick(View view, int position) {
                 ListItemWrapper liste = btmliste.get(position);
                 Toast.makeText(getContext(), liste.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-                if (questionListener != null) {
-                    questionListener.update(questions.get(liste.getId()));
-                }
+                eventBus.post(new LoadQuestions(questions.get(liste.getId()),liste.getId()));
             }
 
             public void onLongClick(View view, int position) {
@@ -92,9 +92,7 @@ public class ListeQuestionFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public interface QuestionListner {
-        void update(Question question);
-    }
+
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

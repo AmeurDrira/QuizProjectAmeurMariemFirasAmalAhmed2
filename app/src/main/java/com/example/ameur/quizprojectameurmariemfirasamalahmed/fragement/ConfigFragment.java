@@ -14,13 +14,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.LanguageSettings;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.squareup.otto.Bus;
 
 import java.util.Locale;
 
 
 public class ConfigFragment extends DialogFragment {
-    private static ConfigListener mConfigListener;
+    private static Bus eventBus;
     private RadioButton radiolangugeFR, radiolangugeEN, radioGenderButton = null;
     private RadioGroup radioGroup;
     private String reponse;
@@ -31,11 +33,12 @@ public class ConfigFragment extends DialogFragment {
     public ConfigFragment() {
     }
 
-    public static ConfigFragment newInstance(ConfigListener listener) {
+    public static ConfigFragment newInstance(Bus Bus) {
+        eventBus = Bus;
         ConfigFragment fragment = new ConfigFragment();
-        mConfigListener = listener;
         return fragment;
     }
+
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -88,9 +91,9 @@ public class ConfigFragment extends DialogFragment {
                         radioGenderButton = (RadioButton) dialogView.findViewById(selectRadio);
                         reponse = radioGenderButton.getText().toString();
                         if (!reponse.isEmpty() && reponse.equals("English")) {
-                            mConfigListener.changeLanguageSettings("en");
+                            eventBus.post(new LanguageSettings("en"));
                         } else if (!reponse.isEmpty() && reponse.equals("Français")) {
-                            mConfigListener.changeLanguageSettings("fr");
+                            eventBus.post(new LanguageSettings("fr"));
                         }
 
                     }
@@ -101,10 +104,6 @@ public class ConfigFragment extends DialogFragment {
 
     }
 
-    public interface ConfigListener {
-        public void changeLanguageSettings(String lang);
-
-    }
 
 
 }

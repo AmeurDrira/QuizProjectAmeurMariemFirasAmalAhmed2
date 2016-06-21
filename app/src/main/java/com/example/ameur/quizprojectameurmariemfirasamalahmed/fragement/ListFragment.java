@@ -1,6 +1,7 @@
 package com.example.ameur.quizprojectameurmariemfirasamalahmed.fragement;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,28 +15,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.PostStage;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.adapter.StageAdapter;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.wrapper.ListItemWrapper;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity.*;
+
 public class ListFragment extends Fragment implements View.OnClickListener {
 
-    private static ListedQuestionLiner questionListener;
     private RecyclerView recyclerView;
     private StageAdapter mAdapter;
     private List<ListItemWrapper> btmlist = new ArrayList<>();
     private TextView mtxt;
+    private static Bus eventBus;
 
-
-    public static ListFragment newInstance(ListedQuestionLiner question) {
+    public static ListFragment newInstance(Bus Bus) {
 
         ListFragment Liste = new ListFragment();
-        questionListener = question;
+        eventBus = Bus;
         return Liste;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -45,31 +51,58 @@ public class ListFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-
-        mtxt = (TextView) view.findViewById(R.id.txtView);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mAdapter = new StageAdapter(btmlist);
+        TextView mtxt = (TextView) view.findViewById(R.id.txtStage);
+     //   Log.v("ssss", String.valueOf(score));
+        mtxt.setText("Score : "+ String.valueOf(score));
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         Log.v("eee", "" + mLayoutManager);
 
-
         recyclerView.setAdapter(mAdapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
 
-
             @Override
             public void onClick(View view, int position) {
                 ListItemWrapper liste1 = btmlist.get(position);
-                Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(getContext(), liste1.getTitle() + "is selected", Toast.LENGTH_SHORT).show();
 
                 // Log.v("eee",""+liste1.getId());
-                if (questionListener != null) {
-                    questionListener.update(liste1.getId());
+                int stage =liste1.getId();
+                if(stage==1)
+                eventBus.post(new PostStage(liste1.getId()));
+                if (stage==2)
+                {
+                    if(score>50)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==3)
+                {
+                    if(score>100)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==4)
+                {
+                    if(score>150)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
+                }
+                if (stage==5)
+                {
+                    if(score>200)
+                    {
+                        eventBus.post(new PostStage(liste1.getId()));
+                    }
                 }
             }
 
@@ -94,17 +127,12 @@ public class ListFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
     public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
     }
 
-
-    public interface ListedQuestionLiner {
-        public void update(int NumStage);
-    }
 
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

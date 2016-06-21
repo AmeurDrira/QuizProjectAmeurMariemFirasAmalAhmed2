@@ -2,12 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ameur.quizprojectameurmariemfirasamalahmed">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <application
         android:allowBackup="true"
+
         android:icon="@drawable/brain"
         android:label="@string/app_name"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <provider
             android:name=".Provider.QuestionsContentProvider"
             android:authorities="quiz.projet.ahmedameuramalfirasmariem.questionsprovider"></provider>
@@ -16,19 +24,33 @@
             android:authorities="quiz.projet.ahmedameuramalfirasmariem.propositionsprovider"></provider>
 
         <activity android:name=".activity.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="1731309327134941" />
+            android:value="@string/facebook_app_id" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1234"
+            android:exported="true" />
+
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
 
     </application>
 

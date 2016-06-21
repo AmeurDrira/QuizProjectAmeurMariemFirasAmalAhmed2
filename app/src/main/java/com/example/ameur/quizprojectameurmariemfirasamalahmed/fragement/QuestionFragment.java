@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.ScoreUpdate;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.core.Question;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,17 +30,21 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     String reponseCorrect;
     private RadioGroup radioGroup;
     private CoordinatorLayout coordinatorLayout;
-    private RadioButton radioButton, radioButton2, radioButton3, radioButton4, radioGenderButton = null;
-    private Button mButtonR;
+    private static Bus eventBus;
+
+    private Button  mButtonq1, mButtonq2, mButtonq3, mButtonq4;
     private ArrayList<String> propositions;
     private TextView mQuestion;
+    private static int code;
     public QuestionFragment() {
 
     }
 
-    public static QuestionFragment newInstance(Question q) {
+    public static QuestionFragment newInstance(Question q,Bus Bus,int codeQuestion) {
         QuestionFragment questionFragment = new QuestionFragment();
         question = q;
+        eventBus = Bus;
+        code=codeQuestion;
         return questionFragment;
     }
 
@@ -47,26 +54,27 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
         mQuestion = (TextView) view.findViewById(R.id.mQuestion);
         mQuestion.setText(question.getQuestion());
-
         propositions = generatePropositions(question.getProposition());
-        radioButton = (RadioButton) view.findViewById(R.id.radioButton);
-        radioButton.setText(propositions.get(0));
 
-        radioButton2 = (RadioButton) view.findViewById(R.id.radioButton2);
-        radioButton2.setText(propositions.get(1));
+        mButtonq1 = (Button) view.findViewById(R.id.button1);
+        mButtonq1.setText(propositions.get(0));
+        mButtonq1.setOnClickListener(this);
 
-        radioButton3 = (RadioButton) view.findViewById(R.id.radioButton3);
-        radioButton3.setText(propositions.get(2));
+        mButtonq2 = (Button) view.findViewById(R.id.button2);
+        mButtonq2.setText(propositions.get(1));
+        mButtonq2.setOnClickListener(this);
 
-        radioButton4 = (RadioButton) view.findViewById(R.id.radioButton4);
-        radioButton4.setText(propositions.get(3));
+        mButtonq3 = (Button) view.findViewById(R.id.button3);
+        mButtonq3.setText(propositions.get(2));
+        mButtonq3.setOnClickListener(this);
+
+        mButtonq4 = (Button) view.findViewById(R.id.button4);
+        mButtonq4.setText(propositions.get(3));
+        mButtonq4.setOnClickListener(this);
+
 
         coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id
                 .coordinatorLayout);
-        mButtonR = (Button) view.findViewById(R.id.button);
-        mButtonR.setOnClickListener(this);
-
-        radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
 
         return view;
     }
@@ -74,8 +82,8 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
     public ArrayList<String> generatePropositions(ArrayList<String> propositions) {
         ArrayList<String> propos = new ArrayList<>();
         propos.add(question.getCorrecte());
-        for (String p : propositions) {
-            if ((p != question.getCorrecte()) && (propos.size() <= 4)) {
+        for (String p: propositions) {
+            if ((!p.equals(question.getCorrecte())) && (propos.size() < 4)) {
                 propos.add(p);
             }
         }
@@ -85,42 +93,42 @@ public class QuestionFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        int selectRadio = 0;
         String reponse = "";
-
+        reponseCorrect = question.getCorrecte();
+        int score = 0;
         switch (v.getId()) {
-            case R.id.button:
-                selectRadio = radioGroup.getCheckedRadioButtonId();
-                radioGenderButton = (RadioButton) getView().findViewById(selectRadio);
+            case R.id.button1:
+                reponse = mButtonq1.getText().toString();
+                if (reponseCorrect.equals(reponse)) {
+                    score += 5;
+                }
 
-                if (null == radioGenderButton) {
+                break;
+            case R.id.button2:
 
-                    snackbar = Snackbar
-                            .make(coordinatorLayout, "Aucun proposition est selectionner", Snackbar.LENGTH_LONG);
-
-                    snackbar.show();
-                } else {
-                    reponse = radioGenderButton.getText().toString();
-                    reponseCorrect = question.getCorrecte();
-
-                    if (reponseCorrect.equals(reponse)) {
-                        snackbar = Snackbar
-                                .make(coordinatorLayout, "Bravo", Snackbar.LENGTH_LONG);
-
-                        snackbar.show();
-                        radioGroup.clearCheck();
-
-
-                    } else {
-                        snackbar = Snackbar
-                                .make(coordinatorLayout, "Reponse fausse", Snackbar.LENGTH_LONG);
-
-                        snackbar.show();
-                        radioGroup.clearCheck();
-                    }
-
+                reponse = mButtonq2.getText().toString();
+                if (reponseCorrect.equals(reponse)) {
+                    score += 5;
                 }
                 break;
+            case R.id.button3:
+
+                reponse = mButtonq3.getText().toString();
+                if (reponseCorrect.equals(reponse)) {
+                    score += 5;
+                }
+
+                break;
+            case R.id.button4:
+
+                reponse = mButtonq4.getText().toString();
+                if (reponseCorrect.equals(reponse)) {
+                    score += 5;
+                }
+            default:
+                break;
+
         }
+        eventBus.post(new ScoreUpdate(score,code));
     }
 }

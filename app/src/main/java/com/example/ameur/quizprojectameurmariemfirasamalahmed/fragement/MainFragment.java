@@ -7,22 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.Events.Launch;
 import com.example.ameur.quizprojectameurmariemfirasamalahmed.R;
+import com.example.ameur.quizprojectameurmariemfirasamalahmed.activity.MainActivity;
+import com.squareup.otto.Bus;
 
 
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private static MainMenuListener mMainMenuListener;
     private Button mResume;
     private Button mStart;
     private Button mConfig;
     private Button mShareFb;
     private Button mShareG;
+    private static Bus eventBus;
 
-    public static MainFragment newInstance(MainMenuListener listener) {
+    public static MainFragment newInstance(Bus Bus) {
         MainFragment fragment = new MainFragment();
-        mMainMenuListener = listener;
+        eventBus = Bus;
         return fragment;
+
     }
 
     @Override
@@ -47,34 +51,25 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shareFb:
-                mMainMenuListener.sharefb();//c'est l'appel de la methode pour partager sur fb :)
+                eventBus.post(new Launch("fcbk"));
                 break;
             case R.id.Config:
-                mMainMenuListener.launchConfig();//c'est l'appel de la methode pour changer la langue et active/desactiver Sound:)
-                break;
-            case R.id.Start:
-                mMainMenuListener.launchListeStage();
-
+                eventBus.post(new Launch("config"));
                 break;
             case R.id.shareG:
-                mMainMenuListener.shareG();
-
+                eventBus.post(new Launch("google"));
                 break;
-
+            case R.id.Start:
+                eventBus.post(new Launch("listeStage"));
+                break;
+       /*
+       case R.id.Resume:
+                MainActivity.score = 0;
+                break;
+*/
         }
 
     }
 
-    //C'est notre listener
-    public interface MainMenuListener {
-        public void sharefb();
-
-        public void launchConfig();
-
-        public void shareG();
-
-        public void launchListeStage();
-
-    }
 
 }
